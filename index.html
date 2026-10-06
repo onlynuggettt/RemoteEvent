@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,28 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>RemoteEvent</title>
-    <meta name="description" content="RemoteEvent — Build. Connect. Play.">
-    <meta name="theme-color" content="#07080c">
 
     <style>
-        :root {
-            --bg: #07080c;
-            --bg2: #0b0d13;
-            --card: rgba(17, 19, 27, 0.72);
-            --card-solid: #11131b;
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.16);
-            --text: #f5f7ff;
-            --muted: #8f95a5;
-            --purple: #7167ff;
-            --purple-light: #918aff;
-            --green: #35d07f;
-            --red: #ff5c67;
-            --yellow: #f6c85f;
-            --radius: 18px;
-            --max: 1200px;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -38,58 +19,10 @@
         }
 
         body {
-            font-family:
-                Inter,
-                ui-sans-serif,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at 50% -10%,
-                    rgba(113,103,255,.18),
-                    transparent 35%
-                ),
-                var(--bg);
-
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-
-            background-image:
-                linear-gradient(
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                );
-
-            background-size: 60px 60px;
-
-            mask-image: linear-gradient(
-                to bottom,
-                black,
-                transparent 85%
-            );
-        }
-
-        ::selection {
-            background: rgba(113,103,255,.35);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #08090d;
             color: white;
+            overflow-x: hidden;
         }
 
         a {
@@ -97,563 +30,216 @@
             text-decoration: none;
         }
 
-        button,
-        a {
-            -webkit-tap-highlight-color: transparent;
-        }
+        /* NAVBAR */
 
-        .container {
-            width: min(var(--max), calc(100% - 40px));
-            margin: auto;
-        }
-
-        /* =========================
-           NAVBAR
-        ========================= */
-
-        .navbar {
+        nav {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            z-index: 1000;
-
-            height: 76px;
-
-            display: flex;
-            align-items: center;
-
-            background: rgba(7,8,12,.65);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            border-bottom: 1px solid transparent;
-
-            transition:
-                background .3s ease,
-                border-color .3s ease,
-                box-shadow .3s ease;
-        }
-
-        .navbar.scrolled {
-            background: rgba(7,8,12,.9);
-            border-color: var(--border);
-            box-shadow: 0 10px 40px rgba(0,0,0,.25);
-        }
-
-        .nav-inner {
-            width: min(var(--max), calc(100% - 40px));
-            margin: auto;
-
+            width: 100%;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 30px;
+            padding: 0 7%;
+            background: rgba(8, 9, 13, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            z-index: 1000;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            font-weight: 850;
-            font-size: 20px;
-            letter-spacing: -.5px;
-        }
-
-        .logo-mark {
-            width: 34px;
-            height: 34px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 10px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--purple),
-                    #9b73ff
-                );
-
-            box-shadow:
-                0 0 25px rgba(113,103,255,.3);
-
-            font-size: 16px;
-            font-weight: 900;
-        }
-
-        .logo span {
-            color: var(--purple-light);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
         .nav-links {
             display: flex;
+            gap: 30px;
             align-items: center;
-            gap: 28px;
         }
 
         .nav-links a {
-            color: var(--muted);
+            color: #a9adb8;
             font-size: 14px;
-            font-weight: 600;
-
-            transition:
-                color .2s ease;
+            transition: 0.2s;
         }
 
         .nav-links a:hover {
             color: white;
         }
 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
         .login-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 10px 16px;
-
-            border-radius: 10px;
-            border: 1px solid rgba(113,103,255,.35);
-
-            background: rgba(113,103,255,.14);
-
-            color: white;
-
-            font-size: 14px;
-            font-weight: 750;
-
-            transition:
-                transform .2s ease,
-                background .2s ease,
-                border-color .2s ease;
+            padding: 11px 18px;
+            border-radius: 9px;
+            background: white;
+            color: black !important;
+            font-weight: 700;
         }
 
         .login-btn:hover {
-            transform: translateY(-2px);
-            background: rgba(113,103,255,.25);
-            border-color: rgba(113,103,255,.65);
+            transform: translateY(-1px);
+            opacity: 0.9;
         }
 
-        /* =========================
-           USER
-        ========================= */
-
-        #account {
-            display: none;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-button {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-
-            padding: 5px 10px 5px 5px;
-
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            background: rgba(255,255,255,.035);
-        }
-
-        .user-button img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-button span {
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        /* =========================
-           HERO
-        ========================= */
+        /* HERO */
 
         .hero {
-            position: relative;
             min-height: 100vh;
-
             display: flex;
             align-items: center;
-
-            padding-top: 76px;
-
-            overflow: hidden;
-        }
-
-        .hero-glow {
-            position: absolute;
-
-            width: 600px;
-            height: 600px;
-
-            left: 50%;
-            top: 25%;
-
-            transform: translate(-50%, -50%);
-
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
             background:
-                radial-gradient(
-                    circle,
-                    rgba(113,103,255,.18),
-                    transparent 65%
-                );
-
-            filter: blur(15px);
-
-            pointer-events: none;
+                radial-gradient(circle at 50% 30%, rgba(80,90,255,0.16), transparent 40%),
+                #08090d;
         }
 
         .hero-content {
-            position: relative;
-            z-index: 2;
-
             max-width: 850px;
-
-            margin: auto;
-
-            text-align: center;
         }
 
         .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 7px 12px;
-
-            margin-bottom: 25px;
-
-            border: 1px solid var(--border);
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 999px;
-
-            background: rgba(255,255,255,.035);
-
-            color: #aeb3c1;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            animation: fadeUp .8s ease both;
-        }
-
-        .badge-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-
-            background: var(--green);
-
-            box-shadow:
-                0 0 12px rgba(53,208,127,.8);
+            color: #aeb3c0;
+            font-size: 13px;
+            margin-bottom: 25px;
+            background: rgba(255,255,255,0.03);
         }
 
         .hero h1 {
-            font-size: clamp(58px, 9vw, 110px);
-            line-height: .91;
+            font-size: clamp(55px, 9vw, 105px);
+            line-height: 0.95;
             letter-spacing: -6px;
-            font-weight: 900;
-
-            animation:
-                fadeUp .8s .08s ease both;
+            margin-bottom: 30px;
         }
 
-        .gradient-text {
-            background:
-                linear-gradient(
-                    135deg,
-                    #ffffff 10%,
-                    #9b94ff 50%,
-                    #7167ff 100%
-                );
-
+        .gradient {
+            background: linear-gradient(90deg, #ffffff, #8c91ff);
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero-description {
+        .hero p {
             max-width: 650px;
-
-            margin: 30px auto 0;
-
-            color: var(--muted);
-
+            margin: auto;
+            color: #9da2ae;
             font-size: 18px;
             line-height: 1.7;
-
-            animation:
-                fadeUp .8s .16s ease both;
         }
 
         .hero-buttons {
+            margin-top: 40px;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
-
-            margin-top: 35px;
-
-            animation:
-                fadeUp .8s .24s ease both;
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            min-height: 48px;
-
-            padding: 0 21px;
-
-            border-radius: 11px;
-
-            font-size: 14px;
-            font-weight: 750;
-
-            transition:
-                transform .25s ease,
-                box-shadow .25s ease,
-                background .25s ease,
-                border-color .25s ease;
+        .primary-btn,
+        .secondary-btn {
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: 0.2s;
         }
 
-        .btn:hover {
+        .primary-btn {
+            background: white;
+            color: black;
+        }
+
+        .secondary-btn {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+            color: white;
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
             transform: translateY(-3px);
         }
 
-        .btn-primary {
-            background: var(--purple);
-            color: white;
+        /* SECTIONS */
 
-            box-shadow:
-                0 10px 35px rgba(113,103,255,.2);
+        section {
+            padding: 110px 7%;
         }
 
-        .btn-primary:hover {
-            background: var(--purple-light);
-            box-shadow:
-                0 15px 45px rgba(113,103,255,.3);
+        .section-title {
+            font-size: 42px;
+            letter-spacing: -2px;
+            margin-bottom: 15px;
         }
 
-        .btn-secondary {
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,.035);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--border-hover);
-            background: rgba(255,255,255,.07);
-        }
-
-        /* =========================
-           SECTION
-        ========================= */
-
-        section:not(.hero) {
-            padding: 110px 0;
-        }
-
-        .section-heading {
+        .section-subtitle {
+            color: #858a96;
+            max-width: 650px;
+            line-height: 1.6;
             margin-bottom: 45px;
         }
 
-        .eyebrow {
-            color: var(--purple-light);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 1.8px;
-            text-transform: uppercase;
-
-            margin-bottom: 12px;
-        }
-
-        .section-heading h2 {
-            font-size: clamp(34px, 5vw, 54px);
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-
-        .section-heading p {
-            max-width: 600px;
-
-            margin-top: 15px;
-
-            color: var(--muted);
-
-            line-height: 1.7;
-        }
-
-        /* =========================
-           CARDS
-        ========================= */
+        /* CARDS */
 
         .grid {
             display: grid;
-            gap: 18px;
-        }
-
-        .games-grid {
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
         .card {
-            position: relative;
-
-            padding: 24px;
-
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.045),
-                    rgba(255,255,255,.015)
-                );
-
-            overflow: hidden;
-
-            transition:
-                transform .35s cubic-bezier(.2,.8,.2,1),
-                border-color .3s ease,
-                box-shadow .35s ease;
-        }
-
-        .card::before {
-            content: "";
-
-            position: absolute;
-            inset: 0;
-
-            background:
-                radial-gradient(
-                    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                    rgba(113,103,255,.1),
-                    transparent 30%
-                );
-
-            opacity: 0;
-            transition: opacity .3s ease;
-            pointer-events: none;
-        }
-
-        .card:hover::before {
-            opacity: 1;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 18px;
+            background: rgba(255,255,255,0.025);
+            transition: 0.25s;
         }
 
         .card:hover {
-            transform: translateY(-7px);
-            border-color: rgba(113,103,255,.3);
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.25);
+            transform: translateY(-6px);
+            border-color: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.04);
         }
 
-        .game-icon {
-            width: 52px;
-            height: 52px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(113,103,255,.2),
-                    rgba(113,103,255,.05)
-                );
-
-            border: 1px solid rgba(113,103,255,.2);
-
-            font-size: 22px;
-
-            margin-bottom: 22px;
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.07);
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
         .card h3 {
-            font-size: 19px;
-            margin-bottom: 9px;
+            margin-bottom: 10px;
+            font-size: 20px;
         }
 
         .card p {
-            color: var(--muted);
+            color: #858a96;
+            line-height: 1.6;
             font-size: 14px;
-            line-height: 1.7;
         }
 
-        .card-link {
-            display: inline-flex;
-            margin-top: 22px;
+        /* STATUS */
 
-            color: var(--purple-light);
-
-            font-size: 13px;
-            font-weight: 750;
-        }
-
-        /* =========================
-           PORTFOLIO
-        ========================= */
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-            gap: 18px;
-        }
-
-        .project-card {
-            min-height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .project-number {
-            color: #555b6e;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .project-card h3 {
-            font-size: 25px;
-            margin-top: 30px;
-        }
-
-        /* =========================
-           STATUS
-        ========================= */
-
-        .status-card {
+        .status-box {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-
-            padding: 25px 28px;
-
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            background: rgba(255,255,255,.025);
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 15px;
+            background: rgba(255,255,255,0.025);
+            margin-bottom: 12px;
         }
 
         .status-left {
@@ -663,990 +249,564 @@
         }
 
         .status-dot {
-            width: 11px;
-            height: 11px;
-
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-
-            background: var(--green);
-
-            box-shadow:
-                0 0 18px rgba(53,208,127,.7);
-
-            animation: pulse 2s infinite;
+            background: #4ade80;
+            box-shadow: 0 0 15px rgba(74,222,128,0.5);
         }
 
-        .status-title {
-            font-weight: 800;
-        }
-
-        .status-sub {
-            color: var(--muted);
+        .operational {
+            color: #4ade80;
             font-size: 13px;
-            margin-top: 3px;
         }
 
-        .status-online {
-            color: var(--green);
-            font-size: 13px;
-            font-weight: 800;
+        /* DASHBOARD */
+
+        .dashboard {
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            background: #0d0f15;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.35);
         }
 
-        /* =========================
-           DASHBOARD
-        ========================= */
-
-        .dashboard-preview {
-            display: grid;
-
-            grid-template-columns:
-                1.2fr .8fr;
-
-            gap: 18px;
-        }
-
-        .dashboard-main,
-        .dashboard-side {
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.045),
-                    rgba(255,255,255,.015)
-                );
-
-            padding: 25px;
-        }
-
-        .dashboard-title {
-            font-size: 13px;
-            color: var(--muted);
-            font-weight: 700;
-        }
-
-        .dashboard-value {
-            font-size: 45px;
-            font-weight: 900;
-            margin-top: 7px;
-            letter-spacing: -2px;
-        }
-
-        .dashboard-change {
-            color: var(--green);
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .chart {
-            height: 130px;
-
-            margin-top: 25px;
-
-            display: flex;
-            align-items: end;
-            gap: 8px;
-        }
-
-        .bar {
-            flex: 1;
-
-            border-radius: 5px 5px 2px 2px;
-
-            background:
-                linear-gradient(
-                    to top,
-                    rgba(113,103,255,.15),
-                    rgba(113,103,255,.85)
-                );
-
-            animation: grow .8s ease both;
-        }
-
-        .activity {
+        .dashboard-top {
+            height: 55px;
             display: flex;
             align-items: center;
-            gap: 12px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid var(--border);
+            gap: 7px;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
-        .activity:last-child {
-            border-bottom: 0;
+        .circle {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #444;
         }
 
-        .activity-icon {
-            width: 35px;
-            height: 35px;
-
+        .dashboard-content {
             display: grid;
-            place-items: center;
-
-            border-radius: 9px;
-
-            background: rgba(113,103,255,.1);
+            grid-template-columns: 200px 1fr;
+            min-height: 350px;
         }
 
-        .activity-text {
+        .sidebar {
+            border-right: 1px solid rgba(255,255,255,0.06);
+            padding: 20px;
+        }
+
+        .sidebar div {
+            padding: 12px;
+            color: #777c88;
+            border-radius: 8px;
+            margin-bottom: 5px;
             font-size: 13px;
         }
 
-        .activity-time {
-            color: var(--muted);
-            font-size: 11px;
-            margin-top: 3px;
+        .sidebar div.active {
+            background: rgba(255,255,255,0.06);
+            color: white;
         }
 
-        /* =========================
-           ACCOUNT DASHBOARD
-        ========================= */
+        .dashboard-main {
+            padding: 35px;
+        }
 
-        #account-section {
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stat span {
+            color: #777c88;
+            font-size: 12px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 26px;
+            margin-top: 8px;
+        }
+
+        /* ACCOUNT */
+
+        #account {
             display: none;
         }
 
-        .profile-card {
+        .account-box {
             display: flex;
             align-items: center;
-            gap: 20px;
-
-            padding: 25px;
-
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-
-            background: rgba(255,255,255,.025);
+            gap: 25px;
+            padding: 30px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.025);
         }
 
-        .profile-card img {
+        .avatar {
             width: 80px;
             height: 80px;
-
-            border-radius: 20px;
-
+            border-radius: 50%;
             object-fit: cover;
+            background: #161820;
         }
 
-        .profile-card h3 {
+        .account-info h3 {
             font-size: 24px;
         }
 
-        .profile-card p {
-            color: var(--muted);
-            font-size: 13px;
+        .account-info p {
+            color: #858a96;
             margin-top: 5px;
         }
 
-        /* =========================
-           CTA
-        ========================= */
+        .logout-btn {
+            margin-left: auto;
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* CTA */
 
         .cta {
-            position: relative;
-
-            padding: 75px 30px;
-
-            border: 1px solid var(--border);
-            border-radius: 25px;
-
-            overflow: hidden;
-
             text-align: center;
-
+            padding: 120px 20px;
             background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(113,103,255,.17),
-                    transparent 55%
-                ),
-                rgba(255,255,255,.025);
+                radial-gradient(circle at 50% 50%, rgba(90,90,255,0.13), transparent 45%);
         }
 
         .cta h2 {
-            font-size: clamp(35px, 5vw, 55px);
-            letter-spacing: -2px;
+            font-size: 50px;
+            letter-spacing: -3px;
+            margin-bottom: 20px;
         }
 
         .cta p {
-            max-width: 550px;
-            margin: 16px auto 28px;
-
-            color: var(--muted);
-            line-height: 1.7;
+            color: #858a96;
+            margin-bottom: 35px;
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
+        /* FOOTER */
 
         footer {
-            padding: 40px 0;
-
-            border-top: 1px solid var(--border);
-
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .footer-inner {
+            padding: 35px 7%;
+            border-top: 1px solid rgba(255,255,255,0.06);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        /* =========================
-           TOAST
-        ========================= */
-
-        .toast {
-            position: fixed;
-
-            left: 50%;
-            bottom: 25px;
-
-            transform:
-                translate(-50%, 30px);
-
-            padding: 12px 17px;
-
-            border: 1px solid var(--border);
-            border-radius: 12px;
-
-            background: rgba(17,19,27,.95);
-            backdrop-filter: blur(15px);
-
-            color: white;
-
+            color: #656a75;
             font-size: 13px;
-            font-weight: 700;
-
-            opacity: 0;
-            pointer-events: none;
-
-            transition:
-                opacity .3s ease,
-                transform .3s ease;
-
-            z-index: 2000;
         }
 
-        .toast.show {
-            opacity: 1;
-            transform:
-                translate(-50%, 0);
-        }
+        /* MOBILE */
 
-        /* =========================
-           ANIMATIONS
-        ========================= */
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%,100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(.75);
-                opacity: .6;
-            }
-        }
-
-        @keyframes grow {
-            from {
-                transform: scaleY(0);
-                transform-origin: bottom;
-            }
-
-            to {
-                transform: scaleY(1);
-            }
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        @media (max-width: 900px) {
-
+        @media (max-width: 800px) {
             .nav-links {
                 display: none;
             }
 
-            .games-grid {
+            .grid {
                 grid-template-columns: 1fr;
             }
 
-            .portfolio-grid {
+            .dashboard-content {
                 grid-template-columns: 1fr;
             }
 
-            .dashboard-preview {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media (max-width: 600px) {
-
-            .container {
-                width: min(100% - 28px, var(--max));
-            }
-
-            .nav-inner {
-                width: calc(100% - 28px);
-            }
-
-            .hero h1 {
-                letter-spacing: -4px;
-            }
-
-            .hero-description {
-                font-size: 16px;
-            }
-
-            section:not(.hero) {
-                padding: 80px 0;
-            }
-
-            .status-card {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .user-button span {
+            .sidebar {
                 display: none;
             }
 
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+
+            .account-box {
+                flex-wrap: wrap;
+            }
+
+            .logout-btn {
+                margin-left: 0;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
+    <!-- NAVBAR -->
 
-<header class="navbar" id="navbar">
+    <nav>
+        <div class="logo">RemoteEvent</div>
 
-    <div class="nav-inner">
-
-        <a href="#" class="logo">
-
-            <div class="logo-mark">
-                R
-            </div>
-
-            Remote<span>Event</span>
-
-        </a>
-
-        <nav class="nav-links">
-
+        <div class="nav-links">
             <a href="#games">Games</a>
             <a href="#portfolio">Portfolio</a>
             <a href="#status">Status</a>
             <a href="#dashboard">Dashboard</a>
-
-        </nav>
-
-        <div class="nav-right">
+            <a href="#account" id="navAccount">Account</a>
 
             <a
-                id="loginButton"
+                href="https://remoteevent-backend.onrender.com/login"
                 class="login-btn"
-                href="YOUR_BACKEND_URL/login"
             >
                 Sign in with Roblox
             </a>
-
-            <div id="account">
-
-                <div class="user-button">
-
-                    <img id="avatar" alt="Roblox Avatar">
-
-                    <span id="username">
-                        User
-                    </span>
-
-                </div>
-
-            </div>
-
         </div>
-
-    </div>
-
-</header>
+    </nav>
 
 
-<!-- =========================
-     HERO
-========================= -->
+    <!-- HERO -->
 
-<main>
-
-<section class="hero">
-
-    <div class="hero-glow"></div>
-
-    <div class="container">
+    <section class="hero">
 
         <div class="hero-content">
 
             <div class="badge">
-
-                <span class="badge-dot"></span>
-
-                Roblox development platform
-
+                Roblox Development Platform
             </div>
 
             <h1>
-
-                Build.<br>
-
-                Connect.<br>
-
-                <span class="gradient-text">
-                    Play.
-                </span>
-
+                Build.
+                <span class="gradient">Connect.</span>
+                Play.
             </h1>
 
-            <p class="hero-description">
-
-                RemoteEvent is a development platform
-                built around Roblox games, projects,
-                tools and communities.
-
+            <p>
+                RemoteEvent is a platform for Roblox developers,
+                creators and players. Showcase your projects,
+                manage your games and connect your Roblox account.
             </p>
 
             <div class="hero-buttons">
 
+                <a href="#games" class="primary-btn">
+                    Explore Games
+                </a>
+
                 <a
-                    href="YOUR_BACKEND_URL/login"
-                    class="btn btn-primary"
+                    href="https://remoteevent-backend.onrender.com/login"
+                    class="secondary-btn"
                 >
                     Sign in with Roblox
                 </a>
 
-                <a
-                    href="#games"
-                    class="btn btn-secondary"
-                >
-                    Explore RemoteEvent
-                </a>
-
             </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =========================
-     GAMES
-========================= -->
+    <!-- GAMES -->
 
-<section id="games">
+    <section id="games">
 
-    <div class="container">
+        <h2 class="section-title">
+            Games
+        </h2>
 
-        <div class="section-heading">
+        <p class="section-subtitle">
+            Discover games and experiences created with RemoteEvent.
+        </p>
 
-            <div class="eyebrow">
-                Projects
+        <div class="grid">
+
+            <div class="card">
+                <div class="card-icon">01</div>
+
+                <h3>Game One</h3>
+
+                <p>
+                    Your first Roblox experience can appear here.
+                    Add your game's description and link.
+                </p>
             </div>
 
-            <h2>
-                Games we're building.
-            </h2>
+            <div class="card">
+                <div class="card-icon">02</div>
 
-            <p>
-                Explore the Roblox experiences and
-                projects powered by RemoteEvent.
-            </p>
+                <h3>Game Two</h3>
+
+                <p>
+                    Showcase another Roblox project or experience.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">03</div>
+
+                <h3>Coming Soon</h3>
+
+                <p>
+                    More RemoteEvent experiences are coming soon.
+                </p>
+            </div>
 
         </div>
 
+    </section>
 
-        <div class="grid games-grid">
 
+    <!-- PORTFOLIO -->
 
-            <article class="card">
+    <section id="portfolio">
 
-                <div class="game-icon">
-                    ◈
+        <h2 class="section-title">
+            Developer Portfolio
+        </h2>
+
+        <p class="section-subtitle">
+            Showcase your Roblox development work, systems,
+            games and projects.
+        </p>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <div class="card-icon">
+                    DEV
                 </div>
 
                 <h3>
-                    Remote Worlds
+                    Roblox Development
                 </h3>
 
                 <p>
-                    A Roblox experience focused on
-                    exploration, progression and
-                    player interaction.
+                    Scripts, systems, UI and gameplay mechanics
+                    built for Roblox experiences.
                 </p>
 
-                <a
-                    class="card-link"
-                    href="#"
-                    onclick="demoAction(event)"
-                >
-                    View game →
-                </a>
+            </div>
 
-            </article>
+            <div class="card">
 
-
-            <article class="card">
-
-                <div class="game-icon">
-                    ◆
+                <div class="card-icon">
+                    UI
                 </div>
 
                 <h3>
-                    City Shift
+                    UI Design
                 </h3>
 
                 <p>
-                    A modern Roblox city experience
-                    built around players, jobs and
-                    social gameplay.
+                    Modern interfaces and dashboards designed
+                    for Roblox games.
                 </p>
 
-                <a
-                    class="card-link"
-                    href="#"
-                    onclick="demoAction(event)"
-                >
-                    View game →
-                </a>
+            </div>
 
-            </article>
+            <div class="card">
 
-
-            <article class="card">
-
-                <div class="game-icon">
-                    ◇
+                <div class="card-icon">
+                    API
                 </div>
 
                 <h3>
-                    Void Runner
+                    Remote Systems
                 </h3>
 
                 <p>
-                    Fast-paced gameplay with
-                    progression systems and
-                    competitive mechanics.
+                    Backend systems and APIs connecting Roblox
+                    experiences to external services.
                 </p>
 
-                <a
-                    class="card-link"
-                    href="#"
-                    onclick="demoAction(event)"
-                >
-                    View game →
-                </a>
-
-            </article>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     PORTFOLIO
-========================= -->
-
-<section id="portfolio">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <div class="eyebrow">
-                Development
             </div>
 
-            <h2>
-                Built with Roblox.
-            </h2>
-
-            <p>
-                Systems, tools and infrastructure
-                designed for reliable Roblox
-                experiences.
-            </p>
-
         </div>
 
-
-        <div class="portfolio-grid">
-
-
-            <article class="card project-card">
-
-                <div>
-
-                    <div class="project-number">
-                        PROJECT 01
-                    </div>
-
-                    <h3>
-                        Plot Assignment System
-                    </h3>
-
-                    <p>
-                        Automatic randomized plot
-                        assignment, ownership UI,
-                        spawning and player handling.
-                    </p>
-
-                </div>
-
-                <span class="card-link">
-                    Roblox Lua
-                </span>
-
-            </article>
+    </section>
 
 
-            <article class="card project-card">
+    <!-- STATUS -->
 
-                <div>
+    <section id="status">
 
-                    <div class="project-number">
-                        PROJECT 02
-                    </div>
+        <h2 class="section-title">
+            System Status
+        </h2>
 
-                    <h3>
-                        Discord Bridge
-                    </h3>
+        <p class="section-subtitle">
+            Check the current status of RemoteEvent services.
+        </p>
 
-                    <p>
-                        Real-time communication between
-                        Roblox experiences and Discord
-                        communities.
-                    </p>
-
-                </div>
-
-                <span class="card-link">
-                    Roblox + API
-                </span>
-
-            </article>
-
-
-            <article class="card project-card">
-
-                <div>
-
-                    <div class="project-number">
-                        PROJECT 03
-                    </div>
-
-                    <h3>
-                        Admin & Control Tools
-                    </h3>
-
-                    <p>
-                        Powerful administrative tools,
-                        permissions and custom
-                        game management systems.
-                    </p>
-
-                </div>
-
-                <span class="card-link">
-                    Systems
-                </span>
-
-            </article>
-
-
-            <article class="card project-card">
-
-                <div>
-
-                    <div class="project-number">
-                        PROJECT 04
-                    </div>
-
-                    <h3>
-                        Player Experience Systems
-                    </h3>
-
-                    <p>
-                        Profiles, currencies,
-                        progression, UI and gameplay
-                        systems designed around players.
-                    </p>
-
-                </div>
-
-                <span class="card-link">
-                    Gameplay
-                </span>
-
-            </article>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     STATUS
-========================= -->
-
-<section id="status">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <div class="eyebrow">
-                System status
-            </div>
-
-            <h2>
-                Everything is online.
-            </h2>
-
-            <p>
-                Current RemoteEvent infrastructure
-                status.
-            </p>
-
-        </div>
-
-
-        <div class="status-card">
+        <div class="status-box">
 
             <div class="status-left">
 
                 <div class="status-dot"></div>
 
-                <div>
-
-                    <div class="status-title">
-                        All systems operational
-                    </div>
-
-                    <div class="status-sub">
-                        Website · API · Services
-                    </div>
-
-                </div>
+                <strong>
+                    Website
+                </strong>
 
             </div>
 
-            <div class="status-online">
-                OPERATIONAL
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<section id="dashboard">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <div class="eyebrow">
-                Dashboard
-            </div>
-
-            <h2>
-                Your RemoteEvent hub.
-            </h2>
-
-            <p>
-                Track projects, activity and
-                your Roblox account from one place.
-            </p>
+            <span class="operational">
+                Operational
+            </span>
 
         </div>
 
 
-        <div class="dashboard-preview">
+        <div class="status-box">
+
+            <div class="status-left">
+
+                <div class="status-dot"></div>
+
+                <strong>
+                    Roblox Authentication
+                </strong>
+
+            </div>
+
+            <span class="operational">
+                Operational
+            </span>
+
+        </div>
 
 
-            <div class="dashboard-main">
+        <div class="status-box">
 
-                <div class="dashboard-title">
-                    PLAYERS
-                </div>
+            <div class="status-left">
 
-                <div class="dashboard-value">
-                    1,284
-                </div>
+                <div class="status-dot"></div>
 
-                <div class="dashboard-change">
-                    +12.4% this week
-                </div>
+                <strong>
+                    Backend
+                </strong>
+
+            </div>
+
+            <span class="operational">
+                Operational
+            </span>
+
+        </div>
+
+    </section>
 
 
-                <div class="chart">
+    <!-- DASHBOARD -->
 
-                    <div
-                        class="bar"
-                        style="height:35%"
-                    ></div>
+    <section id="dashboard">
 
-                    <div
-                        class="bar"
-                        style="height:48%"
-                    ></div>
+        <h2 class="section-title">
+            Control Panel
+        </h2>
 
-                    <div
-                        class="bar"
-                        style="height:42%"
-                    ></div>
+        <p class="section-subtitle">
+            Manage your RemoteEvent projects from one place.
+        </p>
 
-                    <div
-                        class="bar"
-                        style="height:62%"
-                    ></div>
 
-                    <div
-                        class="bar"
-                        style="height:55%"
-                    ></div>
+        <div class="dashboard">
 
-                    <div
-                        class="bar"
-                        style="height:78%"
-                    ></div>
+            <div class="dashboard-top">
 
-                    <div
-                        class="bar"
-                        style="height:91%"
-                    ></div>
-
-                </div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
 
             </div>
 
 
-            <div class="dashboard-side">
+            <div class="dashboard-content">
 
-                <div class="dashboard-title">
-                    RECENT ACTIVITY
-                </div>
+                <div class="sidebar">
 
-
-                <div class="activity">
-
-                    <div class="activity-icon">
-                        +
+                    <div class="active">
+                        Overview
                     </div>
 
                     <div>
+                        Games
+                    </div>
 
-                        <div class="activity-text">
-                            New player joined
-                        </div>
+                    <div>
+                        Players
+                    </div>
 
-                        <div class="activity-time">
-                            2 minutes ago
-                        </div>
+                    <div>
+                        Analytics
+                    </div>
 
+                    <div>
+                        Settings
                     </div>
 
                 </div>
 
 
-                <div class="activity">
+                <div class="dashboard-main">
 
-                    <div class="activity-icon">
-                        ✓
-                    </div>
+                    <h2>
+                        Dashboard
+                    </h2>
 
-                    <div>
+                    <div class="stat-grid">
 
-                        <div class="activity-text">
-                            Game status updated
+                        <div class="stat">
+
+                            <span>
+                                Games
+                            </span>
+
+                            <strong>
+                                0
+                            </strong>
+
                         </div>
 
-                        <div class="activity-time">
-                            12 minutes ago
+                        <div class="stat">
+
+                            <span>
+                                Players
+                            </span>
+
+                            <strong>
+                                0
+                            </strong>
+
                         </div>
 
-                    </div>
+                        <div class="stat">
 
-                </div>
+                            <span>
+                                Status
+                            </span>
 
+                            <strong>
+                                Online
+                            </strong>
 
-                <div class="activity">
-
-                    <div class="activity-icon">
-                        ◆
-                    </div>
-
-                    <div>
-
-                        <div class="activity-text">
-                            New project deployed
-                        </div>
-
-                        <div class="activity-time">
-                            31 minutes ago
                         </div>
 
                     </div>
@@ -1655,412 +815,260 @@
 
             </div>
 
-
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =========================
-     LOGGED IN ACCOUNT
-========================= -->
+    <!-- ACCOUNT -->
 
-<section id="account-section">
+    <section id="account">
 
-    <div class="container">
+        <h2 class="section-title">
+            Your Account
+        </h2>
 
-        <div class="section-heading">
+        <p class="section-subtitle">
+            Your connected Roblox account.
+        </p>
 
-            <div class="eyebrow">
-                Account
-            </div>
-
-            <h2>
-                Your Roblox account.
-            </h2>
-
-        </div>
-
-
-        <div class="profile-card">
+        <div class="account-box">
 
             <img
-                id="dashboardAvatar"
+                id="userAvatar"
+                class="avatar"
+                src=""
                 alt="Roblox Avatar"
             >
 
-            <div>
+            <div class="account-info">
 
-                <h3 id="dashboardUsername">
-                    Loading...
+                <h3 id="username">
+                    Roblox User
                 </h3>
 
-                <p id="dashboardId">
-                    Roblox ID: Loading...
+                <p id="displayName">
+                    Not logged in
+                </p>
+
+                <p id="userId">
+                    ID: -
                 </p>
 
             </div>
 
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     CTA
-========================= -->
-
-<section>
-
-    <div class="container">
-
-        <div class="cta">
-
-            <div class="eyebrow">
-                RemoteEvent
-            </div>
-
-            <h2>
-                Ready to build?
-            </h2>
-
-            <p>
-                Connect your Roblox account and
-                become part of the RemoteEvent
-                platform.
-            </p>
-
-            <a
-                href="YOUR_BACKEND_URL/login"
-                class="btn btn-primary"
+            <button
+                class="logout-btn"
+                onclick="logout()"
             >
-                Connect Roblox Account
-            </a>
+                Logout
+            </button>
 
         </div>
 
-    </div>
+    </section>
 
-</section>
 
-</main>
+    <!-- CTA -->
 
+    <section class="cta">
 
-<!-- =========================
-     FOOTER
-========================= -->
+        <h2>
+            Ready to build?
+        </h2>
 
-<footer>
+        <p>
+            Connect your Roblox account and start using RemoteEvent.
+        </p>
 
-    <div class="container">
+        <a
+            href="https://remoteevent-backend.onrender.com/login"
+            class="primary-btn"
+        >
+            Sign in with Roblox
+        </a>
 
-        <div class="footer-inner">
+    </section>
 
-            <div>
-                © <span id="year"></span>
-                RemoteEvent. All rights reserved.
-            </div>
 
-            <div class="footer-links">
+    <!-- FOOTER -->
 
-                <a href="#games">
-                    Games
-                </a>
+    <footer>
 
-                <a href="#portfolio">
-                    Projects
-                </a>
+        <span>
+            © 2026 RemoteEvent
+        </span>
 
-                <a href="#status">
-                    Status
-                </a>
+        <span>
+            Built for Roblox developers.
+        </span>
 
-            </div>
+    </footer>
 
-        </div>
 
-    </div>
+    <script>
 
-</footer>
+        /*
+            YOUR REMOTE EVENT BACKEND
+        */
 
+        const BACKEND_URL =
+            "https://remoteevent-backend.onrender.com";
 
-<!-- =========================
-     TOAST
-========================= -->
 
-<div
-    class="toast"
-    id="toast"
->
-    Coming soon.
-</div>
+        /*
+            Check if the user is logged in
+        */
 
+        async function checkLogin() {
 
-<script>
+            try {
 
-/* =================================
-   CONFIGURATION
-================================= */
-
-const BACKEND_URL =
-    "YOUR_BACKEND_URL";
-
-
-/* =================================
-   YEAR
-================================= */
-
-document.getElementById("year")
-    .textContent = new Date().getFullYear();
-
-
-/* =================================
-   NAVBAR SCROLL EFFECT
-================================= */
-
-const navbar =
-    document.getElementById("navbar");
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        if (window.scrollY > 20) {
-
-            navbar.classList.add("scrolled");
-
-        } else {
-
-            navbar.classList.remove("scrolled");
-
-        }
-
-    },
-    { passive: true }
-);
-
-
-/* =================================
-   CARD MOUSE EFFECT
-================================= */
-
-document.querySelectorAll(".card")
-.forEach(card => {
-
-    card.addEventListener(
-        "mousemove",
-        event => {
-
-            const rect =
-                card.getBoundingClientRect();
-
-            const x =
-                ((event.clientX - rect.left) /
-                rect.width) * 100;
-
-            const y =
-                ((event.clientY - rect.top) /
-                rect.height) * 100;
-
-            card.style.setProperty(
-                "--mouse-x",
-                x + "%"
-            );
-
-            card.style.setProperty(
-                "--mouse-y",
-                y + "%"
-            );
-
-        }
-    );
-
-});
-
-
-/* =================================
-   TOAST
-================================= */
-
-let toastTimer;
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 2500);
-
-}
-
-
-function demoAction(event) {
-
-    event.preventDefault();
-
-    showToast(
-        "This game will be available soon."
-    );
-
-}
-
-
-/* =================================
-   ROBLOX ACCOUNT
-================================= */
-
-async function loadAccount() {
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND_URL + "/api/me",
-                {
-                    credentials: "include"
-                }
-            );
-
-        if (!response.ok) {
-            return;
-        }
-
-        const user =
-            await response.json();
-
-        if (!user.loggedIn) {
-            return;
-        }
-
-
-        /* Hide login */
-
-        document
-            .getElementById("loginButton")
-            .style.display = "none";
-
-
-        /* Navbar account */
-
-        document
-            .getElementById("account")
-            .style.display = "flex";
-
-
-        document
-            .getElementById("avatar")
-            .src = user.picture;
-
-
-        document
-            .getElementById("username")
-            .textContent =
-                user.username;
-
-
-        /* Account section */
-
-        document
-            .getElementById("account-section")
-            .style.display = "block";
-
-
-        document
-            .getElementById("dashboardAvatar")
-            .src = user.picture;
-
-
-        document
-            .getElementById("dashboardUsername")
-            .textContent =
-                user.displayName ||
-                user.username;
-
-
-        document
-            .getElementById("dashboardId")
-            .textContent =
-                "Roblox ID: " +
-                user.id;
-
-
-        /* Change login buttons */
-
-        document
-            .querySelectorAll(
-                'a[href="YOUR_BACKEND_URL/login"]'
-            )
-            .forEach(button => {
-
-                button.style.display = "none";
-
-            });
-
-
-    } catch (error) {
-
-        console.log(
-            "Not logged in."
-        );
-
-    }
-
-}
-
-
-/* =================================
-   START ACCOUNT CHECK
-================================= */
-
-loadAccount();
-
-
-/* =================================
-   SMOOTH ANCHOR SCROLLING
-================================= */
-
-document
-    .querySelectorAll('a[href^="#"]')
-    .forEach(link => {
-
-        link.addEventListener(
-            "click",
-            event => {
-
-                const target =
-                    document.querySelector(
-                        link.getAttribute("href")
+                const response =
+                    await fetch(
+                        BACKEND_URL + "/api/me",
+                        {
+                            credentials: "include"
+                        }
                     );
 
-                if (!target) return;
+                if (!response.ok) {
+                    return;
+                }
 
-                event.preventDefault();
+                const data =
+                    await response.json();
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
+
+                if (
+                    data.loggedIn &&
+                    data.user
+                ) {
+
+                    showAccount(data.user);
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Login check failed:",
+                    error
+                );
 
             }
-        );
 
-    });
+        }
 
-</script>
+
+        /*
+            Show Roblox account
+        */
+
+        function showAccount(user) {
+
+            const account =
+                document.getElementById(
+                    "account"
+                );
+
+            const navAccount =
+                document.getElementById(
+                    "navAccount"
+                );
+
+
+            account.style.display =
+                "block";
+
+
+            navAccount.style.display =
+                "block";
+
+
+            document.getElementById(
+                "username"
+            ).textContent =
+                "@" + (
+                    user.username ||
+                    "Roblox User"
+                );
+
+
+            document.getElementById(
+                "displayName"
+            ).textContent =
+                user.displayName ||
+                user.username ||
+                "Roblox User";
+
+
+            document.getElementById(
+                "userId"
+            ).textContent =
+                "ID: " +
+                (
+                    user.id ||
+                    "-"
+                );
+
+
+            if (user.picture) {
+
+                document.getElementById(
+                    "userAvatar"
+                ).src =
+                    user.picture;
+
+            }
+
+        }
+
+
+        /*
+            Logout
+        */
+
+        async function logout() {
+
+            try {
+
+                await fetch(
+                    BACKEND_URL + "/logout",
+                    {
+                        credentials: "include"
+                    }
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+            window.location.reload();
+
+        }
+
+
+        /*
+            Hide account link until logged in
+        */
+
+        document.getElementById(
+            "navAccount"
+        ).style.display =
+            "none";
+
+
+        /*
+            Check login on page load
+        */
+
+        checkLogin();
+
+    </script>
 
 </body>
 </html>
+```
