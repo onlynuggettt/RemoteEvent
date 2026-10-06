@@ -1116,10 +1116,21 @@ async function logout() {
 }
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    checkLogin
-);
+document.addEventListener("DOMContentLoaded", async () => {
+    await checkLogin();
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("login") === "success") {
+        window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+        );
+
+        await checkLogin();
+    }
+});
 
 </script>
 
