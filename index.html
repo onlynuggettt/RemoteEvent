@@ -1,19 +1,36 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#08090d">
-    <meta name="description" content="RemoteEvent — Roblox games, development, systems and services.">
 
-    <title>RemoteEvent | Roblox Development</title>
+    <title>RemoteEvent</title>
+    <meta name="description" content="RemoteEvent — Build. Connect. Play.">
+    <meta name="theme-color" content="#07080c">
 
     <style>
+        :root {
+            --bg: #07080c;
+            --bg2: #0b0d13;
+            --card: rgba(17, 19, 27, 0.72);
+            --card-solid: #11131b;
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.16);
+            --text: #f5f7ff;
+            --muted: #8f95a5;
+            --purple: #7167ff;
+            --purple-light: #918aff;
+            --green: #35d07f;
+            --red: #ff5c67;
+            --yellow: #f6c85f;
+            --radius: 18px;
+            --max: 1200px;
+        }
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         html {
@@ -21,9 +38,25 @@
         }
 
         body {
-            font-family: Inter, Arial, sans-serif;
-            background: #08090d;
-            color: #ffffff;
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(113,103,255,.18),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
@@ -32,57 +65,90 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            background:
-                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-            background-size: 55px 55px;
-            mask-image: linear-gradient(to bottom, black, transparent);
-        }
-
-        .glow {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            filter: blur(130px);
-            opacity: .13;
-            pointer-events: none;
             z-index: -1;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 60px 60px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 85%
+            );
         }
 
-        .glow.one {
-            background: #7257ff;
-            top: -250px;
-            right: -150px;
+        ::selection {
+            background: rgba(113,103,255,.35);
+            color: white;
         }
 
-        .glow.two {
-            background: #00c8ff;
-            left: -300px;
-            top: 900px;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        /* NAVBAR */
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        nav {
+        .container {
+            width: min(var(--max), calc(100% - 40px));
+            margin: auto;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 75px;
+            z-index: 1000;
+
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+
+            background: rgba(7,8,12,.65);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid transparent;
+
+            transition:
+                background .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(7,8,12,.9);
+            border-color: var(--border);
+            box-shadow: 0 10px 40px rgba(0,0,0,.25);
+        }
+
+        .nav-inner {
+            width: min(var(--max), calc(100% - 40px));
+            margin: auto;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 7%;
-
-            background: rgba(8, 9, 13, .75);
-            backdrop-filter: blur(18px);
-
-            border-bottom: 1px solid rgba(255,255,255,.06);
-
-            z-index: 100;
+            gap: 30px;
         }
 
         .logo {
@@ -90,717 +156,612 @@
             align-items: center;
             gap: 10px;
 
-            font-weight: 800;
-            font-size: 18px;
-            color: white;
-            text-decoration: none;
+            font-weight: 850;
+            font-size: 20px;
+            letter-spacing: -.5px;
         }
 
-        .logo-box {
+        .logo-mark {
             width: 34px;
             height: 34px;
 
             display: grid;
             place-items: center;
 
-            border-radius: 9px;
+            border-radius: 10px;
 
-            background: linear-gradient(135deg, #7056ff, #28cfff);
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    #9b73ff
+                );
 
+            box-shadow:
+                0 0 25px rgba(113,103,255,.3);
+
+            font-size: 16px;
             font-weight: 900;
-
-            box-shadow: 0 0 25px rgba(105, 80, 255, .35);
         }
 
-        nav ul {
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
             display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        nav ul a {
-            color: #858d9c;
-            text-decoration: none;
-            font-size: 14px;
-            transition: .2s;
-        }
-
-        nav ul a:hover {
-            color: white;
-        }
-
-        .nav-button {
-            color: white;
-            text-decoration: none;
-
-            padding: 10px 16px;
-
-            border-radius: 8px;
-
-            border: 1px solid #292f3b;
-
-            background: #11141b;
-
-            transition: .2s;
-        }
-
-        .nav-button:hover {
-            background: #191d27;
-            border-color: #454d5c;
-        }
-
-        /* GENERAL */
-
-        section {
-            max-width: 1200px;
-            margin: auto;
-            padding: 110px 30px;
-        }
-
-        .eyebrow {
-            color: #7c8798;
-            font-size: 11px;
-            letter-spacing: 2px;
-            font-weight: 800;
-        }
-
-        h2 {
-            font-size: 42px;
-            letter-spacing: -2px;
-            margin-top: 10px;
-        }
-
-        /* HERO */
-
-        #home {
-            min-height: 100vh;
-
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-
             align-items: center;
-
-            gap: 70px;
-
-            padding-top: 150px;
+            gap: 28px;
         }
 
-        .hero h1 {
-            font-size: clamp(65px, 8vw, 105px);
-            line-height: .88;
-            letter-spacing: -7px;
+        .nav-links a {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
 
-            margin: 25px 0;
+            transition:
+                color .2s ease;
         }
 
-        .hero h1 span {
-            color: transparent;
-
-            background: linear-gradient(
-                90deg,
-                #ffffff,
-                #7660ff,
-                #32d8ff
-            );
-
-            background-clip: text;
-            -webkit-background-clip: text;
+        .nav-links a:hover {
+            color: white;
         }
 
-        .hero-description {
-            color: #8d96a5;
-            font-size: 17px;
-            line-height: 1.7;
-            max-width: 560px;
-        }
-
-        .buttons {
+        .nav-right {
             display: flex;
+            align-items: center;
             gap: 12px;
-            margin-top: 30px;
         }
 
-        .button {
+        .login-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
 
-            padding: 13px 19px;
+            padding: 10px 16px;
 
-            border-radius: 9px;
+            border-radius: 10px;
+            border: 1px solid rgba(113,103,255,.35);
 
-            text-decoration: none;
+            background: rgba(113,103,255,.14);
 
-            font-weight: 700;
-
-            transition: .2s;
-        }
-
-        .button.primary {
             color: white;
 
-            background: linear-gradient(
-                135deg,
-                #765cff,
-                #5035db
-            );
+            font-size: 14px;
+            font-weight: 750;
 
-            box-shadow: 0 15px 40px rgba(94,70,255,.2);
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                border-color .2s ease;
         }
 
-        .button.primary:hover {
+        .login-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(113,103,255,.25);
+            border-color: rgba(113,103,255,.65);
+        }
+
+        /* =========================
+           USER
+        ========================= */
+
+        #account {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-button {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 5px 10px 5px 5px;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.035);
+        }
+
+        .user-button img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-button span {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding-top: 76px;
+
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+
+            width: 600px;
+            height: 600px;
+
+            left: 50%;
+            top: 25%;
+
+            transform: translate(-50%, -50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(113,103,255,.18),
+                    transparent 65%
+                );
+
+            filter: blur(15px);
+
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 850px;
+
+            margin: auto;
+
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 7px 12px;
+
+            margin-bottom: 25px;
+
+            border: 1px solid var(--border);
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.035);
+
+            color: #aeb3c1;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            animation: fadeUp .8s ease both;
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow:
+                0 0 12px rgba(53,208,127,.8);
+        }
+
+        .hero h1 {
+            font-size: clamp(58px, 9vw, 110px);
+            line-height: .91;
+            letter-spacing: -6px;
+            font-weight: 900;
+
+            animation:
+                fadeUp .8s .08s ease both;
+        }
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff 10%,
+                    #9b94ff 50%,
+                    #7167ff 100%
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            margin: 30px auto 0;
+
+            color: var(--muted);
+
+            font-size: 18px;
+            line-height: 1.7;
+
+            animation:
+                fadeUp .8s .16s ease both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+
+            margin-top: 35px;
+
+            animation:
+                fadeUp .8s .24s ease both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 48px;
+
+            padding: 0 21px;
+
+            border-radius: 11px;
+
+            font-size: 14px;
+            font-weight: 750;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+        .btn:hover {
             transform: translateY(-3px);
         }
 
-        .button.secondary {
-            color: #dce1ea;
-
-            border: 1px solid #282f3a;
-
-            background: #10131a;
-        }
-
-        .button.secondary:hover {
-            background: #171b23;
-        }
-
-        .stats {
-            display: flex;
-            gap: 45px;
-
-            margin-top: 50px;
-        }
-
-        .stats div {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .stats strong {
-            font-size: 23px;
-        }
-
-        .stats span {
-            color: #667182;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* TERMINAL */
-
-        .terminal {
-            padding: 20px;
-
-            background: linear-gradient(
-                145deg,
-                #11151d,
-                #090b10
-            );
-
-            border: 1px solid #242b37;
-
-            border-radius: 17px;
+        .btn-primary {
+            background: var(--purple);
+            color: white;
 
             box-shadow:
-                0 35px 100px rgba(0,0,0,.6),
-                0 0 60px rgba(90,70,255,.08);
+                0 10px 35px rgba(113,103,255,.2);
         }
 
-        .terminal-top,
-        .terminal-bottom {
-            display: flex;
-            justify-content: space-between;
-
-            color: #667182;
-
-            font-size: 10px;
-            letter-spacing: 1.5px;
+        .btn-primary:hover {
+            background: var(--purple-light);
+            box-shadow:
+                0 15px 45px rgba(113,103,255,.3);
         }
 
-        .online {
-            color: #45e99d;
+        .btn-secondary {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+            color: white;
         }
 
-        pre {
-            margin: 20px 0;
-
-            padding: 35px 25px;
-
-            min-height: 280px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-            gap: 14px;
-
-            white-space: pre-wrap;
-
-            background: #07090d;
-
-            border: 1px solid #202732;
-
-            border-radius: 10px;
-
-            color: #8e9aac;
-
-            font: 13px monospace;
-
-            line-height: 1.5;
+        .btn-secondary:hover {
+            border-color: var(--border-hover);
+            background: rgba(255,255,255,.07);
         }
 
-        .cyan {
-            color: #4bdcff;
-        }
+        /* =========================
+           SECTION
+        ========================= */
 
-        .purple {
-            color: #9b88ff;
+        section:not(.hero) {
+            padding: 110px 0;
         }
-
-        .green {
-            color: #5de8a0;
-        }
-
-        /* GAMES */
 
         .section-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-
-            margin-bottom: 35px;
+            margin-bottom: 45px;
         }
 
-        .games {
+        .eyebrow {
+            color: var(--purple-light);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+
+            margin-bottom: 12px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(34px, 5vw, 54px);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .section-heading p {
+            max-width: 600px;
+
+            margin-top: 15px;
+
+            color: var(--muted);
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 17px;
+            gap: 18px;
         }
 
-        .game {
+        .games-grid {
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+        }
+
+        .card {
+            position: relative;
+
+            padding: 24px;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.045),
+                    rgba(255,255,255,.015)
+                );
+
             overflow: hidden;
 
-            background: #0d1016;
-
-            border: 1px solid #202733;
-
-            border-radius: 14px;
-
-            transition: .25s;
+            transition:
+                transform .35s cubic-bezier(.2,.8,.2,1),
+                border-color .3s ease,
+                box-shadow .35s ease;
         }
 
-        .game:hover {
-            transform: translateY(-6px);
-            border-color: #394252;
-        }
-
-        .game-image {
-            height: 230px;
-
-            display: flex;
-            align-items: end;
-
-            padding: 20px;
-
-            position: relative;
-        }
-
-        .game-image::after {
+        .card::before {
             content: "";
 
             position: absolute;
             inset: 0;
 
-            background: linear-gradient(
-                transparent 20%,
-                rgba(0,0,0,.85)
-            );
-        }
-
-        .game-1 {
             background:
-                radial-gradient(circle at 70% 25%, #5d42ee, transparent 30%),
-                linear-gradient(135deg,#17102d,#12364a,#071114);
+                radial-gradient(
+                    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(113,103,255,.1),
+                    transparent 30%
+                );
+
+            opacity: 0;
+            transition: opacity .3s ease;
+            pointer-events: none;
         }
 
-        .game-2 {
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(113,103,255,.3);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.25);
+        }
+
+        .game-icon {
+            width: 52px;
+            height: 52px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
             background:
-                radial-gradient(circle at 30% 25%, #00d8ff, transparent 25%),
-                linear-gradient(135deg,#092b38,#322050,#110c20);
+                linear-gradient(
+                    135deg,
+                    rgba(113,103,255,.2),
+                    rgba(113,103,255,.05)
+                );
+
+            border: 1px solid rgba(113,103,255,.2);
+
+            font-size: 22px;
+
+            margin-bottom: 22px;
         }
 
-        .game-3 {
-            background:
-                radial-gradient(circle at 70% 25%, #e354ff, transparent 25%),
-                linear-gradient(135deg,#210c31,#080b16);
+        .card h3 {
+            font-size: 19px;
+            margin-bottom: 9px;
         }
 
-        .game-title-art {
-            position: relative;
-            z-index: 2;
-
-            font-size: 30px;
-            line-height: .9;
-
-            letter-spacing: 4px;
+        .card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
         }
 
-        .game-title-art b {
-            font-size: 42px;
+        .card-link {
+            display: inline-flex;
+            margin-top: 22px;
+
+            color: var(--purple-light);
+
+            font-size: 13px;
+            font-weight: 750;
         }
 
-        .badge {
-            position: absolute;
+        /* =========================
+           PORTFOLIO
+        ========================= */
 
-            top: 15px;
-            right: 15px;
-
-            z-index: 3;
-
-            padding: 6px 8px;
-
-            font-size: 9px;
-            letter-spacing: 1px;
-
-            border-radius: 5px;
-
-            background: rgba(0,0,0,.7);
-
-            border: 1px solid rgba(255,255,255,.12);
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 18px;
         }
 
-        .game-content {
-            padding: 18px;
-        }
-
-        .game-content h3 {
-            margin-bottom: 8px;
-        }
-
-        .game-content p {
-            color: #788394;
-            line-height: 1.5;
-        }
-
-        .game-meta {
+        .project-card {
+            min-height: 220px;
             display: flex;
-            gap: 15px;
-
-            padding-top: 18px;
-
-            color: #667182;
-
-            font-size: 11px;
-        }
-
-        .game-meta a {
-            margin-left: auto;
-
-            color: white;
-
-            text-decoration: none;
-        }
-
-        /* PORTFOLIO */
-
-        .projects {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-
-            border-top: 1px solid #202733;
-        }
-
-        .project {
-            display: grid;
-            grid-template-columns: 60px 1fr;
-
-            gap: 15px;
-
-            padding: 30px 20px;
-
-            border-bottom: 1px solid #202733;
-        }
-
-        .project:nth-child(odd) {
-            border-right: 1px solid #202733;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .project-number {
-            color: #596575;
-            font-family: monospace;
+            color: #555b6e;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
-        .project h3 {
-            margin-bottom: 10px;
+        .project-card h3 {
+            font-size: 25px;
+            margin-top: 30px;
         }
 
-        .project p {
-            color: #778292;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
+        /* =========================
+           STATUS
+        ========================= */
 
-        .tag {
-            display: inline-block;
-
-            margin-right: 5px;
-
-            padding: 5px 7px;
-
-            border: 1px solid #29303c;
-
-            border-radius: 5px;
-
-            color: #98a2b2;
-
-            font-size: 9px;
-
-            text-transform: uppercase;
-        }
-
-        /* STATUS */
-
-        .status-panel {
-            background: #0b0e14;
-
-            border: 1px solid #202733;
-
-            border-radius: 14px;
-
-            overflow: hidden;
-        }
-
-        .overall {
+        .status-card {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 20px;
 
-            padding: 25px;
+            padding: 25px 28px;
 
-            border-bottom: 1px solid #202733;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            background: rgba(255,255,255,.025);
         }
 
-        .overall-left {
+        .status-left {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .check {
-            width: 38px;
-            height: 38px;
-
-            display: grid;
-            place-items: center;
+        .status-dot {
+            width: 11px;
+            height: 11px;
 
             border-radius: 50%;
 
-            background: #12362a;
+            background: var(--green);
 
-            color: #45e99d;
+            box-shadow:
+                0 0 18px rgba(53,208,127,.7);
 
-            font-size: 20px;
+            animation: pulse 2s infinite;
         }
 
-        .overall small {
-            display: block;
-
-            margin-top: 5px;
-
-            color: #697587;
+        .status-title {
+            font-weight: 800;
         }
 
-        .uptime {
-            color: #45e99d;
-            font-size: 11px;
+        .status-sub {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 3px;
         }
 
-        .service {
-            display: flex;
-            justify-content: space-between;
-
-            padding: 20px 25px;
-
-            border-bottom: 1px solid #1b222c;
+        .status-online {
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 800;
         }
 
-        .service:last-child {
-            border: 0;
-        }
+        /* =========================
+           DASHBOARD
+        ========================= */
 
-        .service small {
-            display: block;
-
-            margin-top: 5px;
-
-            color: #687486;
-        }
-
-        .service-status {
-            color: #45e99d;
-            font-size: 11px;
-        }
-
-        /* DASHBOARD */
-
-        .dashboard {
+        .dashboard-preview {
             display: grid;
-            grid-template-columns: 210px 1fr;
 
-            border: 1px solid #202733;
+            grid-template-columns:
+                1.2fr .8fr;
 
-            border-radius: 14px;
-
-            overflow: hidden;
-
-            background: #0b0e14;
+            gap: 18px;
         }
 
-        .sidebar {
-            padding: 20px;
+        .dashboard-main,
+        .dashboard-side {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
 
-            border-right: 1px solid #202733;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.045),
+                    rgba(255,255,255,.015)
+                );
 
-            background: #090c11;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            padding-bottom: 20px;
-
-            margin-bottom: 15px;
-
-            border-bottom: 1px solid #202733;
-        }
-
-        .avatar {
-            width: 34px;
-            height: 34px;
-
-            display: grid;
-            place-items: center;
-
-            border-radius: 8px;
-
-            background: linear-gradient(135deg,#765cff,#29d4ff);
-
-            font-weight: 900;
-        }
-
-        .sidebar a {
-            display: block;
-
-            padding: 10px;
-
-            margin: 4px 0;
-
-            color: #707b8c;
-
-            text-decoration: none;
-
-            border-radius: 6px;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            color: white;
-            background: #161b24;
-        }
-
-        .dashboard-main {
             padding: 25px;
         }
 
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            margin-bottom: 20px;
+        .dashboard-title {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 700;
         }
 
-        .manage {
-            color: white;
-
-            background: #151a22;
-
-            border: 1px solid #2b3340;
-
-            border-radius: 7px;
-
-            padding: 9px 13px;
-
-            cursor: pointer;
+        .dashboard-value {
+            font-size: 45px;
+            font-weight: 900;
+            margin-top: 7px;
+            letter-spacing: -2px;
         }
 
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(4,1fr);
-
-            gap: 10px;
-        }
-
-        .metric {
-            padding: 17px;
-
-            background: #0f131a;
-
-            border: 1px solid #202733;
-
-            border-radius: 9px;
-        }
-
-        .metric small {
-            color: #687486;
-
-            font-size: 9px;
-
-            letter-spacing: 1px;
-        }
-
-        .metric strong {
-            display: block;
-
-            font-size: 25px;
-
-            margin: 9px 0;
-        }
-
-        .increase {
-            color: #45e99d;
-            font-size: 9px;
-        }
-
-        .dashboard-bottom {
-            display: grid;
-            grid-template-columns: 1.5fr .8fr;
-
-            gap: 10px;
-
-            margin-top: 10px;
-        }
-
-        .panel {
-            background: #0f131a;
-
-            border: 1px solid #202733;
-
-            border-radius: 9px;
-
-            overflow: hidden;
-        }
-
-        .panel-header {
-            padding: 15px;
-
-            border-bottom: 1px solid #202733;
-
+        .dashboard-change {
+            color: var(--green);
             font-size: 12px;
+            font-weight: 700;
+        }
+
+        .chart {
+            height: 130px;
+
+            margin-top: 25px;
+
+            display: flex;
+            align-items: end;
+            gap: 8px;
+        }
+
+        .bar {
+            flex: 1;
+
+            border-radius: 5px 5px 2px 2px;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(113,103,255,.15),
+                    rgba(113,103,255,.85)
+                );
+
+            animation: grow .8s ease both;
         }
 
         .activity {
@@ -808,319 +769,407 @@
             align-items: center;
             gap: 12px;
 
-            padding: 14px 15px;
+            padding: 13px 0;
 
-            border-bottom: 1px solid #1a2029;
+            border-bottom: 1px solid var(--border);
         }
 
         .activity:last-child {
-            border: 0;
+            border-bottom: 0;
         }
 
-        .activity-dot {
-            width: 7px;
-            height: 7px;
+        .activity-icon {
+            width: 35px;
+            height: 35px;
 
-            border-radius: 50%;
+            display: grid;
+            place-items: center;
 
-            background: #45e99d;
+            border-radius: 9px;
 
-            box-shadow: 0 0 10px #45e99d;
+            background: rgba(113,103,255,.1);
         }
 
-        .activity div {
-            flex: 1;
+        .activity-text {
+            font-size: 13px;
         }
 
-        .activity small {
-            display: block;
-
-            margin-top: 4px;
-
-            color: #697587;
+        .activity-time {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 3px;
         }
 
-        .quick-button {
-            display: block;
+        /* =========================
+           ACCOUNT DASHBOARD
+        ========================= */
 
-            width: calc(100% - 20px);
-
-            margin: 10px;
-
-            padding: 10px;
-
-            color: #b6bfcd;
-
-            background: #141922;
-
-            border: 1px solid #252d39;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            text-align: left;
+        #account-section {
+            display: none;
         }
 
-        /* CONTACT */
-
-        .contact-section {
+        .profile-card {
             display: flex;
-
-            justify-content: space-between;
-
             align-items: center;
+            gap: 20px;
 
-            border-top: 1px solid #202733;
+            padding: 25px;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            background: rgba(255,255,255,.025);
         }
 
-        .contact-section h2 {
-            font-size: 45px;
+        .profile-card img {
+            width: 80px;
+            height: 80px;
+
+            border-radius: 20px;
+
+            object-fit: cover;
         }
 
-        .contact-section p {
-            margin-top: 10px;
-
-            color: #788394;
+        .profile-card h3 {
+            font-size: 24px;
         }
 
-        /* FOOTER */
+        .profile-card p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            position: relative;
+
+            padding: 75px 30px;
+
+            border: 1px solid var(--border);
+            border-radius: 25px;
+
+            overflow: hidden;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(113,103,255,.17),
+                    transparent 55%
+                ),
+                rgba(255,255,255,.025);
+        }
+
+        .cta h2 {
+            font-size: clamp(35px, 5vw, 55px);
+            letter-spacing: -2px;
+        }
+
+        .cta p {
+            max-width: 550px;
+            margin: 16px auto 28px;
+
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
-            max-width: 1200px;
+            padding: 40px 0;
 
-            margin: auto;
+            border-top: 1px solid var(--border);
 
-            padding: 30px;
-
-            border-top: 1px solid #202733;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            color: #596575;
-
-            font-size: 11px;
+            color: var(--muted);
+            font-size: 13px;
         }
 
-        /* TOAST */
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
 
-        #toast {
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast {
             position: fixed;
 
-            right: 25px;
+            left: 50%;
             bottom: 25px;
 
-            padding: 13px 17px;
+            transform:
+                translate(-50%, 30px);
 
-            background: #171c25;
+            padding: 12px 17px;
 
-            border: 1px solid #343c49;
+            border: 1px solid var(--border);
+            border-radius: 12px;
 
-            border-radius: 8px;
+            background: rgba(17,19,27,.95);
+            backdrop-filter: blur(15px);
 
-            transform: translateY(100px);
+            color: white;
+
+            font-size: 13px;
+            font-weight: 700;
 
             opacity: 0;
+            pointer-events: none;
 
-            transition: .25s;
+            transition:
+                opacity .3s ease,
+                transform .3s ease;
 
-            z-index: 999;
+            z-index: 2000;
         }
 
-        #toast.show {
-            transform: translateY(0);
+        .toast.show {
             opacity: 1;
+            transform:
+                translate(-50%, 0);
         }
 
-        /* MOBILE */
+        /* =========================
+           ANIMATIONS
+        ========================= */
 
-        @media(max-width: 850px) {
-
-            nav ul {
-                display: none;
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
             }
 
-            #home {
-                grid-template-columns: 1fr;
-            }
-
-            .games {
-                grid-template-columns: 1fr;
-            }
-
-            .projects {
-                grid-template-columns: 1fr;
-            }
-
-            .project:nth-child(odd) {
-                border-right: 0;
-            }
-
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .metrics {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .dashboard-bottom {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-section {
-                display: block;
-            }
-
-            .contact-section .buttons {
-                margin-top: 25px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media(max-width: 550px) {
+        @keyframes pulse {
+            0%,100% {
+                transform: scale(1);
+                opacity: 1;
+            }
 
-            section {
-                padding: 80px 18px;
+            50% {
+                transform: scale(.75);
+                opacity: .6;
+            }
+        }
+
+        @keyframes grow {
+            from {
+                transform: scaleY(0);
+                transform-origin: bottom;
+            }
+
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-preview {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: min(100% - 28px, var(--max));
+            }
+
+            .nav-inner {
+                width: calc(100% - 28px);
             }
 
             .hero h1 {
-                font-size: 65px;
-                letter-spacing: -5px;
+                letter-spacing: -4px;
             }
 
-            .buttons {
+            .hero-description {
+                font-size: 16px;
+            }
+
+            section:not(.hero) {
+                padding: 80px 0;
+            }
+
+            .status-card {
+                align-items: flex-start;
                 flex-direction: column;
             }
 
-            .stats {
-                gap: 25px;
-            }
-
-            .metrics {
-                grid-template-columns: 1fr;
-            }
-
-            footer {
+            .footer-inner {
                 flex-direction: column;
-                gap: 12px;
+                align-items: flex-start;
             }
+
+            .user-button span {
+                display: none;
+            }
+
         }
     </style>
 </head>
 
 <body>
 
-<div class="glow one"></div>
-<div class="glow two"></div>
+<!-- =========================
+     NAVBAR
+========================= -->
 
-<!-- NAVIGATION -->
+<header class="navbar" id="navbar">
 
-<nav>
+    <div class="nav-inner">
 
-    <a href="#home" class="logo">
-        <span class="logo-box">R</span>
-        RemoteEvent
-    </a>
+        <a href="#" class="logo">
 
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#games">Games</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#status">Status</a></li>
-        <li><a href="#dashboard">Dashboard</a></li>
-    </ul>
+            <div class="logo-mark">
+                R
+            </div>
 
-    <a class="nav-button" href="#contact">
-        Contact
-    </a>
+            Remote<span>Event</span>
 
-</nav>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="#games">Games</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#status">Status</a>
+            <a href="#dashboard">Dashboard</a>
+
+        </nav>
+
+        <div class="nav-right">
+
+            <a
+                id="loginButton"
+                class="login-btn"
+                href="YOUR_BACKEND_URL/login"
+            >
+                Sign in with Roblox
+            </a>
+
+            <div id="account">
+
+                <div class="user-button">
+
+                    <img id="avatar" alt="Roblox Avatar">
+
+                    <span id="username">
+                        User
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
 
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
-<section id="home">
+<main>
 
-    <div class="hero">
+<section class="hero">
 
-        <div>
+    <div class="hero-glow"></div>
 
-            <div class="eyebrow">
-                <span style="color:#45e99d">●</span>
-                ROBLOX DEVELOPMENT STUDIO
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="badge">
+
+                <span class="badge-dot"></span>
+
+                Roblox development platform
+
             </div>
 
             <h1>
+
                 Build.<br>
-                <span>Connect.</span><br>
-                Play.
+
+                Connect.<br>
+
+                <span class="gradient-text">
+                    Play.
+                </span>
+
             </h1>
 
             <p class="hero-description">
-                RemoteEvent creates Roblox experiences, powerful systems
-                and tools designed to keep players connected.
+
+                RemoteEvent is a development platform
+                built around Roblox games, projects,
+                tools and communities.
+
             </p>
 
-            <div class="buttons">
+            <div class="hero-buttons">
 
-                <a class="button primary" href="#games">
-                    Explore Games →
+                <a
+                    href="YOUR_BACKEND_URL/login"
+                    class="btn btn-primary"
+                >
+                    Sign in with Roblox
                 </a>
 
-                <a class="button secondary" href="#portfolio">
-                    View Portfolio
+                <a
+                    href="#games"
+                    class="btn btn-secondary"
+                >
+                    Explore RemoteEvent
                 </a>
 
-            </div>
-
-            <div class="stats">
-
-                <div>
-                    <strong>03</strong>
-                    <span>Games</span>
-                </div>
-
-                <div>
-                    <strong>08</strong>
-                    <span>Projects</span>
-                </div>
-
-                <div>
-                    <strong>24K+</strong>
-                    <span>Players</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="terminal">
-
-            <div class="terminal-top">
-                REMOTEEVENT / LIVE
-                <span class="online">● ONLINE</span>
-            </div>
-
-            <pre><span class="cyan">remote</span>.FireAllClients(<span class="green">"Welcome"</span>)
-
-<span style="color:#4d5868">// connection established</span>
-
-<span class="purple">players</span> = 1,428
-<span class="purple">servers</span> = 37
-<span class="purple">status</span> = <span class="green">"operational"</span>
-
-<span class="cyan">connection</span> = <span class="green">"stable"</span></pre>
-
-            <div class="terminal-bottom">
-                <span>Systems operational</span>
-                <span>99.9% uptime</span>
             </div>
 
         </div>
@@ -1130,352 +1179,317 @@
 </section>
 
 
-<!-- GAMES -->
+<!-- =========================
+     GAMES
+========================= -->
 
 <section id="games">
 
-    <div class="section-heading">
+    <div class="container">
 
-        <div>
-            <div class="eyebrow">01 / GAMES</div>
-            <h2>Games built to be played.</h2>
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Projects
+            </div>
+
+            <h2>
+                Games we're building.
+            </h2>
+
+            <p>
+                Explore the Roblox experiences and
+                projects powered by RemoteEvent.
+            </p>
+
         </div>
 
-    </div>
+
+        <div class="grid games-grid">
 
 
-    <div class="games">
+            <article class="card">
 
-        <article class="game">
-
-            <div class="game-image game-1">
-
-                <span class="game-title-art">
-                    REMOTE<br>
-                    <b>WORLDS</b>
-                </span>
-
-                <span class="badge">
-                    FEATURED
-                </span>
-
-            </div>
-
-            <div class="game-content">
-
-                <h3>Remote Worlds</h3>
-
-                <p>
-                    Explore, build and compete in a persistent Roblox world.
-                </p>
-
-                <div class="game-meta">
-                    <span>👥 1,240 playing</span>
-                    <span>★ 4.8</span>
-
-                    <a href="#" onclick="demo('Replace this with your Roblox game URL'); return false;">
-                        Play ↗
-                    </a>
+                <div class="game-icon">
+                    ◈
                 </div>
 
-            </div>
-
-        </article>
-
-
-        <article class="game">
-
-            <div class="game-image game-2">
-
-                <span class="game-title-art">
-                    CITY<br>
-                    <b>SHIFT</b>
-                </span>
-
-                <span class="badge">
-                    NEW
-                </span>
-
-            </div>
-
-            <div class="game-content">
-
-                <h3>City Shift</h3>
+                <h3>
+                    Remote Worlds
+                </h3>
 
                 <p>
-                    A fast-paced social city experience.
+                    A Roblox experience focused on
+                    exploration, progression and
+                    player interaction.
                 </p>
 
-                <div class="game-meta">
-                    <span>👥 386 playing</span>
-                    <span>★ 4.6</span>
+                <a
+                    class="card-link"
+                    href="#"
+                    onclick="demoAction(event)"
+                >
+                    View game →
+                </a>
 
-                    <a href="#" onclick="demo('Replace this with your Roblox game URL'); return false;">
-                        Play ↗
-                    </a>
+            </article>
+
+
+            <article class="card">
+
+                <div class="game-icon">
+                    ◆
                 </div>
 
-            </div>
-
-        </article>
-
-
-        <article class="game">
-
-            <div class="game-image game-3">
-
-                <span class="game-title-art">
-                    VOID<br>
-                    <b>RUNNER</b>
-                </span>
-
-                <span class="badge">
-                    BETA
-                </span>
-
-            </div>
-
-            <div class="game-content">
-
-                <h3>Void Runner</h3>
+                <h3>
+                    City Shift
+                </h3>
 
                 <p>
-                    Survive the void. Upgrade. Escape.
+                    A modern Roblox city experience
+                    built around players, jobs and
+                    social gameplay.
                 </p>
 
-                <div class="game-meta">
-                    <span>👥 118 playing</span>
-                    <span>★ 4.7</span>
+                <a
+                    class="card-link"
+                    href="#"
+                    onclick="demoAction(event)"
+                >
+                    View game →
+                </a>
 
-                    <a href="#" onclick="demo('Replace this with your Roblox game URL'); return false;">
-                        Play ↗
-                    </a>
+            </article>
+
+
+            <article class="card">
+
+                <div class="game-icon">
+                    ◇
                 </div>
 
-            </div>
+                <h3>
+                    Void Runner
+                </h3>
 
-        </article>
+                <p>
+                    Fast-paced gameplay with
+                    progression systems and
+                    competitive mechanics.
+                </p>
+
+                <a
+                    class="card-link"
+                    href="#"
+                    onclick="demoAction(event)"
+                >
+                    View game →
+                </a>
+
+            </article>
+
+
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- PORTFOLIO -->
+<!-- =========================
+     PORTFOLIO
+========================= -->
 
 <section id="portfolio">
 
-    <div class="section-heading">
+    <div class="container">
 
-        <div>
-            <div class="eyebrow">02 / PORTFOLIO</div>
-            <h2>Systems behind the games.</h2>
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Development
+            </div>
+
+            <h2>
+                Built with Roblox.
+            </h2>
+
+            <p>
+                Systems, tools and infrastructure
+                designed for reliable Roblox
+                experiences.
+            </p>
+
         </div>
 
-    </div>
+
+        <div class="portfolio-grid">
 
 
-    <div class="projects">
+            <article class="card project-card">
 
-        <article class="project">
+                <div>
 
-            <div class="project-number">01</div>
+                    <div class="project-number">
+                        PROJECT 01
+                    </div>
 
-            <div>
+                    <h3>
+                        Plot Assignment System
+                    </h3>
 
-                <h3>Plot Assignment System</h3>
+                    <p>
+                        Automatic randomized plot
+                        assignment, ownership UI,
+                        spawning and player handling.
+                    </p>
 
-                <p>
-                    Randomized plot ownership, spawning and owner display
-                    UI for Roblox experiences.
-                </p>
+                </div>
 
-                <span class="tag">Luau</span>
-                <span class="tag">Roblox</span>
-                <span class="tag">Systems</span>
+                <span class="card-link">
+                    Roblox Lua
+                </span>
 
-            </div>
-
-        </article>
-
-
-        <article class="project">
-
-            <div class="project-number">02</div>
-
-            <div>
-
-                <h3>Discord Bridge</h3>
-
-                <p>
-                    Two-way communication between Roblox and Discord
-                    with message polling and events.
-                </p>
-
-                <span class="tag">HttpService</span>
-                <span class="tag">API</span>
-                <span class="tag">Discord</span>
-
-            </div>
-
-        </article>
+            </article>
 
 
-        <article class="project">
+            <article class="card project-card">
 
-            <div class="project-number">03</div>
+                <div>
 
-            <div>
+                    <div class="project-number">
+                        PROJECT 02
+                    </div>
 
-                <h3>Admin & Control Tools</h3>
+                    <h3>
+                        Discord Bridge
+                    </h3>
 
-                <p>
-                    Permission-aware tools and interfaces for managing
-                    live game experiences.
-                </p>
+                    <p>
+                        Real-time communication between
+                        Roblox experiences and Discord
+                        communities.
+                    </p>
 
-                <span class="tag">UI</span>
-                <span class="tag">Security</span>
-                <span class="tag">Luau</span>
+                </div>
 
-            </div>
+                <span class="card-link">
+                    Roblox + API
+                </span>
 
-        </article>
+            </article>
 
 
-        <article class="project">
+            <article class="card project-card">
 
-            <div class="project-number">04</div>
+                <div>
 
-            <div>
+                    <div class="project-number">
+                        PROJECT 03
+                    </div>
 
-                <h3>Player Experience Systems</h3>
+                    <h3>
+                        Admin & Control Tools
+                    </h3>
 
-                <p>
-                    Responsive UI, gameplay feedback and server-side
-                    systems focused on smooth play.
-                </p>
+                    <p>
+                        Powerful administrative tools,
+                        permissions and custom
+                        game management systems.
+                    </p>
 
-                <span class="tag">UX</span>
-                <span class="tag">Gameplay</span>
-                <span class="tag">Optimization</span>
+                </div>
 
-            </div>
+                <span class="card-link">
+                    Systems
+                </span>
 
-        </article>
+            </article>
+
+
+            <article class="card project-card">
+
+                <div>
+
+                    <div class="project-number">
+                        PROJECT 04
+                    </div>
+
+                    <h3>
+                        Player Experience Systems
+                    </h3>
+
+                    <p>
+                        Profiles, currencies,
+                        progression, UI and gameplay
+                        systems designed around players.
+                    </p>
+
+                </div>
+
+                <span class="card-link">
+                    Gameplay
+                </span>
+
+            </article>
+
+
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- STATUS -->
+<!-- =========================
+     STATUS
+========================= -->
 
 <section id="status">
 
-    <div class="section-heading">
+    <div class="container">
 
-        <div>
-            <div class="eyebrow">03 / STATUS</div>
-            <h2>Everything is operational.</h2>
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                System status
+            </div>
+
+            <h2>
+                Everything is online.
+            </h2>
+
+            <p>
+                Current RemoteEvent infrastructure
+                status.
+            </p>
+
         </div>
 
-        <span style="color:#697587;font-size:11px">
-            UPDATED JUST NOW
-        </span>
 
-    </div>
+        <div class="status-card">
 
+            <div class="status-left">
 
-    <div class="status-panel">
+                <div class="status-dot"></div>
 
-        <div class="overall">
+                <div>
 
-            <div class="overall-left">
+                    <div class="status-title">
+                        All systems operational
+                    </div>
 
-                <span class="check">✓</span>
+                    <div class="status-sub">
+                        Website · API · Services
+                    </div>
 
-                <span>
-                    <strong>All systems operational</strong>
-
-                    <small>
-                        No known issues affecting RemoteEvent services.
-                    </small>
-                </span>
+                </div>
 
             </div>
 
-            <span class="uptime">
-                99.9% uptime
-            </span>
-
-        </div>
-
-
-        <div class="service">
-
-            <span>
-                ◆ Website
-
-                <small>
-                    RemoteEvent web services
-                </small>
-            </span>
-
-            <b class="service-status">
-                Operational
-            </b>
-
-        </div>
-
-
-        <div class="service">
-
-            <span>
-                ◈ Roblox Games
-
-                <small>
-                    Game servers and matchmaking
-                </small>
-            </span>
-
-            <b class="service-status">
-                Operational
-            </b>
-
-        </div>
-
-
-        <div class="service">
-
-            <span>
-                ◇ Discord Bridge
-
-                <small>
-                    Message relay and integrations
-                </small>
-            </span>
-
-            <b class="service-status">
-                Operational
-            </b>
-
-        </div>
-
-
-        <div class="service">
-
-            <span>
-                ▣ Dashboard
-
-                <small>
-                    Control and monitoring panel
-                </small>
-            </span>
-
-            <b class="service-status">
-                Operational
-            </b>
+            <div class="status-online">
+                OPERATIONAL
+            </div>
 
         </div>
 
@@ -1484,263 +1498,208 @@
 </section>
 
 
-<!-- DASHBOARD -->
+<!-- =========================
+     DASHBOARD
+========================= -->
 
 <section id="dashboard">
 
-    <div class="section-heading">
+    <div class="container">
 
-        <div>
-            <div class="eyebrow">04 / DASHBOARD</div>
-            <h2>Your control center.</h2>
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Dashboard
+            </div>
+
+            <h2>
+                Your RemoteEvent hub.
+            </h2>
+
+            <p>
+                Track projects, activity and
+                your Roblox account from one place.
+            </p>
+
         </div>
 
-        <span style="
-            color:#9c8cff;
-            font-size:9px;
-            border:1px solid #342e59;
-            padding:7px 9px;
-            border-radius:6px;
-        ">
-            ● PRIVATE PREVIEW
-        </span>
+
+        <div class="dashboard-preview">
+
+
+            <div class="dashboard-main">
+
+                <div class="dashboard-title">
+                    PLAYERS
+                </div>
+
+                <div class="dashboard-value">
+                    1,284
+                </div>
+
+                <div class="dashboard-change">
+                    +12.4% this week
+                </div>
+
+
+                <div class="chart">
+
+                    <div
+                        class="bar"
+                        style="height:35%"
+                    ></div>
+
+                    <div
+                        class="bar"
+                        style="height:48%"
+                    ></div>
+
+                    <div
+                        class="bar"
+                        style="height:42%"
+                    ></div>
+
+                    <div
+                        class="bar"
+                        style="height:62%"
+                    ></div>
+
+                    <div
+                        class="bar"
+                        style="height:55%"
+                    ></div>
+
+                    <div
+                        class="bar"
+                        style="height:78%"
+                    ></div>
+
+                    <div
+                        class="bar"
+                        style="height:91%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-side">
+
+                <div class="dashboard-title">
+                    RECENT ACTIVITY
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <div class="activity-text">
+                            New player joined
+                        </div>
+
+                        <div class="activity-time">
+                            2 minutes ago
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <div class="activity-text">
+                            Game status updated
+                        </div>
+
+                        <div class="activity-time">
+                            12 minutes ago
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        ◆
+                    </div>
+
+                    <div>
+
+                        <div class="activity-text">
+                            New project deployed
+                        </div>
+
+                        <div class="activity-time">
+                            31 minutes ago
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
 
     </div>
 
+</section>
 
-    <div class="dashboard">
 
-        <aside class="sidebar">
+<!-- =========================
+     LOGGED IN ACCOUNT
+========================= -->
 
-            <div class="profile">
+<section id="account-section">
 
-                <div class="avatar">
-                    R
-                </div>
+    <div class="container">
 
-                <div>
-                    <strong>RemoteEvent</strong>
+        <div class="section-heading">
 
-                    <small style="display:block;color:#687486">
-                        Administrator
-                    </small>
-                </div>
-
+            <div class="eyebrow">
+                Account
             </div>
 
-            <a class="active" href="#dashboard">
-                ⌂ Overview
-            </a>
+            <h2>
+                Your Roblox account.
+            </h2>
 
-            <a href="#games">
-                ◈ Games
-            </a>
+        </div>
 
-            <a href="#status">
-                ◉ Services
-            </a>
 
-            <a href="#portfolio">
-                ▦ Projects
-            </a>
+        <div class="profile-card">
 
-            <a href="#contact">
-                ⚙ Settings
-            </a>
+            <img
+                id="dashboardAvatar"
+                alt="Roblox Avatar"
+            >
 
-        </aside>
+            <div>
 
+                <h3 id="dashboardUsername">
+                    Loading...
+                </h3>
 
-        <div class="dashboard-main">
-
-            <div class="dashboard-header">
-
-                <div>
-                    <small style="color:#667182">
-                        DASHBOARD /
-                    </small>
-
-                    <h3>
-                        Overview
-                    </h3>
-                </div>
-
-                <button class="manage"
-                    onclick="demo('Dashboard controls are currently demo-only.')">
-                    Manage
-                </button>
-
-            </div>
-
-
-            <div class="metrics">
-
-                <div class="metric">
-
-                    <small>
-                        ACTIVE PLAYERS
-                    </small>
-
-                    <strong>
-                        1,744
-                    </strong>
-
-                    <span class="increase">
-                        ↑ 12.4%
-                    </span>
-
-                </div>
-
-
-                <div class="metric">
-
-                    <small>
-                        GAME VISITS
-                    </small>
-
-                    <strong>
-                        24.8K
-                    </strong>
-
-                    <span class="increase">
-                        ↑ 8.1%
-                    </span>
-
-                </div>
-
-
-                <div class="metric">
-
-                    <small>
-                        UPTIME
-                    </small>
-
-                    <strong>
-                        99.9%
-                    </strong>
-
-                    <span class="increase">
-                        ↑ 0.2%
-                    </span>
-
-                </div>
-
-
-                <div class="metric">
-
-                    <small>
-                        ACTIVE SERVERS
-                    </small>
-
-                    <strong>
-                        37
-                    </strong>
-
-                    <span style="color:#8993a4;font-size:9px">
-                        Stable
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="dashboard-bottom">
-
-                <div class="panel">
-
-                    <div class="panel-header">
-                        Recent activity
-                    </div>
-
-
-                    <div class="activity">
-
-                        <span class="activity-dot"></span>
-
-                        <div>
-                            <strong>
-                                Remote Worlds updated
-                            </strong>
-
-                            <small>
-                                2 minutes ago
-                            </small>
-                        </div>
-
-                        <small>
-                            v1.8.2
-                        </small>
-
-                    </div>
-
-
-                    <div class="activity">
-
-                        <span class="activity-dot"></span>
-
-                        <div>
-                            <strong>
-                                Discord Bridge connected
-                            </strong>
-
-                            <small>
-                                18 minutes ago
-                            </small>
-                        </div>
-
-                        <small>
-                            ONLINE
-                        </small>
-
-                    </div>
-
-
-                    <div class="activity">
-
-                        <span class="activity-dot"></span>
-
-                        <div>
-                            <strong>
-                                Void Runner server started
-                            </strong>
-
-                            <small>
-                                42 minutes ago
-                            </small>
-                        </div>
-
-                        <small>
-                            SERVER #14
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-                <div class="panel">
-
-                    <div class="panel-header">
-                        Quick actions
-                    </div>
-
-                    <button class="quick-button"
-                        onclick="demo('Create Game action ready to connect.')">
-                        ＋ Create game
-                    </button>
-
-                    <button class="quick-button"
-                        onclick="demo('Deployment action ready to connect.')">
-                        ↗ Deploy update
-                    </button>
-
-                    <button class="quick-button"
-                        onclick="demo('Logs action ready to connect.')">
-                        ≡ View logs
-                    </button>
-
-                </div>
+                <p id="dashboardId">
+                    Roblox ID: Loading...
+                </p>
 
             </div>
 
@@ -1751,40 +1710,38 @@
 </section>
 
 
-<!-- CONTACT -->
+<!-- =========================
+     CTA
+========================= -->
 
-<section id="contact" class="contact-section">
+<section>
 
-    <div>
+    <div class="container">
 
-        <div class="eyebrow">
-            05 / CONTACT
+        <div class="cta">
+
+            <div class="eyebrow">
+                RemoteEvent
+            </div>
+
+            <h2>
+                Ready to build?
+            </h2>
+
+            <p>
+                Connect your Roblox account and
+                become part of the RemoteEvent
+                platform.
+            </p>
+
+            <a
+                href="YOUR_BACKEND_URL/login"
+                class="btn btn-primary"
+            >
+                Connect Roblox Account
+            </a>
+
         </div>
-
-        <h2>
-            Have something to build?
-        </h2>
-
-        <p>
-            Let's turn your next Roblox idea into a real experience.
-        </p>
-
-    </div>
-
-
-    <div class="buttons">
-
-        <a class="button primary"
-           href="#"
-           onclick="demo('Replace this with your Discord invite.');return false">
-            Join Discord ↗
-        </a>
-
-        <a class="button secondary"
-           href="#"
-           onclick="demo('Replace this with your Roblox profile/group link.');return false">
-            Roblox Profile ↗
-        </a>
 
     </div>
 
@@ -1793,57 +1750,317 @@
 </main>
 
 
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
 
-    <a href="#home" class="logo">
-        <span class="logo-box">R</span>
-        RemoteEvent
-    </a>
+    <div class="container">
 
-    <span>
-        © <span id="year"></span> RemoteEvent
-    </span>
+        <div class="footer-inner">
 
-    <span>
-        Luau • Games • Systems
-    </span>
+            <div>
+                © <span id="year"></span>
+                RemoteEvent. All rights reserved.
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#games">
+                    Games
+                </a>
+
+                <a href="#portfolio">
+                    Projects
+                </a>
+
+                <a href="#status">
+                    Status
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </footer>
 
 
-<div id="toast"></div>
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Coming soon.
+</div>
 
 
 <script>
 
-    document.getElementById("year").textContent =
-        new Date().getFullYear();
+/* =================================
+   CONFIGURATION
+================================= */
+
+const BACKEND_URL =
+    "YOUR_BACKEND_URL";
 
 
-    let toastTimer;
+/* =================================
+   YEAR
+================================= */
+
+document.getElementById("year")
+    .textContent = new Date().getFullYear();
 
 
-    function demo(message) {
+/* =================================
+   NAVBAR SCROLL EFFECT
+================================= */
 
-        const toast =
-            document.getElementById("toast");
+const navbar =
+    document.getElementById("navbar");
 
-        toast.textContent = message;
+window.addEventListener(
+    "scroll",
+    () => {
 
-        toast.classList.add("show");
+        if (window.scrollY > 20) {
 
-        clearTimeout(toastTimer);
+            navbar.classList.add("scrolled");
 
-        toastTimer = setTimeout(() => {
+        } else {
 
-            toast.classList.remove("show");
+            navbar.classList.remove("scrolled");
 
-        }, 2800);
+        }
+
+    },
+    { passive: true }
+);
+
+
+/* =================================
+   CARD MOUSE EFFECT
+================================= */
+
+document.querySelectorAll(".card")
+.forEach(card => {
+
+    card.addEventListener(
+        "mousemove",
+        event => {
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                ((event.clientX - rect.left) /
+                rect.width) * 100;
+
+            const y =
+                ((event.clientY - rect.top) /
+                rect.height) * 100;
+
+            card.style.setProperty(
+                "--mouse-x",
+                x + "%"
+            );
+
+            card.style.setProperty(
+                "--mouse-y",
+                y + "%"
+            );
+
+        }
+    );
+
+});
+
+
+/* =================================
+   TOAST
+================================= */
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2500);
+
+}
+
+
+function demoAction(event) {
+
+    event.preventDefault();
+
+    showToast(
+        "This game will be available soon."
+    );
+
+}
+
+
+/* =================================
+   ROBLOX ACCOUNT
+================================= */
+
+async function loadAccount() {
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL + "/api/me",
+                {
+                    credentials: "include"
+                }
+            );
+
+        if (!response.ok) {
+            return;
+        }
+
+        const user =
+            await response.json();
+
+        if (!user.loggedIn) {
+            return;
+        }
+
+
+        /* Hide login */
+
+        document
+            .getElementById("loginButton")
+            .style.display = "none";
+
+
+        /* Navbar account */
+
+        document
+            .getElementById("account")
+            .style.display = "flex";
+
+
+        document
+            .getElementById("avatar")
+            .src = user.picture;
+
+
+        document
+            .getElementById("username")
+            .textContent =
+                user.username;
+
+
+        /* Account section */
+
+        document
+            .getElementById("account-section")
+            .style.display = "block";
+
+
+        document
+            .getElementById("dashboardAvatar")
+            .src = user.picture;
+
+
+        document
+            .getElementById("dashboardUsername")
+            .textContent =
+                user.displayName ||
+                user.username;
+
+
+        document
+            .getElementById("dashboardId")
+            .textContent =
+                "Roblox ID: " +
+                user.id;
+
+
+        /* Change login buttons */
+
+        document
+            .querySelectorAll(
+                'a[href="YOUR_BACKEND_URL/login"]'
+            )
+            .forEach(button => {
+
+                button.style.display = "none";
+
+            });
+
+
+    } catch (error) {
+
+        console.log(
+            "Not logged in."
+        );
 
     }
+
+}
+
+
+/* =================================
+   START ACCOUNT CHECK
+================================= */
+
+loadAccount();
+
+
+/* =================================
+   SMOOTH ANCHOR SCROLLING
+================================= */
+
+document
+    .querySelectorAll('a[href^="#"]')
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                const target =
+                    document.querySelector(
+                        link.getAttribute("href")
+                    );
+
+                if (!target) return;
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    });
 
 </script>
 
 </body>
 </html>
-```
