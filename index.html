@@ -946,72 +946,68 @@ const BACKEND_URL =
 
 
 async function checkLogin() {
-
     try {
+        const response = await fetch(`${BACKEND_URL}/api/me`, {
+            method: "GET",
+            credentials: "include",
+            cache: "no-store"
+        });
 
-        const response = await fetch(
-            `${BACKEND_URL}/api/me`,
-            {
-                method: "GET",
-                credentials: "include",
-                cache: "no-store"
-            }
-        );
+        const data = await response.json();
 
-        const data =
-            await response.json();
+        console.log("Login response:", data);
 
-        console.log(
-            "RemoteEvent login:",
-            data
-        );
+        const loginButton = document.getElementById("loginButton");
+        const heroLoginButton = document.getElementById("heroLoginButton");
+        const accountSection = document.getElementById("accountSection");
 
+        if (data.loggedIn && data.user) {
+            // Hide login buttons
+            if (loginButton) loginButton.style.display = "none";
+            if (heroLoginButton) heroLoginButton.style.display = "none";
 
-        const loginButton =
-            document.getElementById(
-                "loginButton"
-            );
-
-        const heroLoginButton =
-            document.getElementById(
-                "heroLoginButton"
-            );
-
-        const accountSection =
-            document.getElementById(
-                "accountSection"
-            );
-
-
-        if (
-            data.loggedIn &&
-            data.user
-        ) {
-
-            /*
-             * USER IS LOGGED IN
-             */
-
-            if (loginButton) {
-
-                loginButton.style.display =
-                    "none";
-
+            // Show account section
+            if (accountSection) {
+                accountSection.style.display = "block";
             }
 
-            if (heroLoginButton) {
+            // Fill account information
+            const avatar = document.getElementById("accountAvatar");
+            const username = document.getElementById("accountUsername");
+            const displayName = document.getElementById("accountDisplayName");
+            const userId = document.getElementById("accountUserId");
 
-                heroLoginButton.style.display =
-                    "none";
-
+            if (avatar) {
+                avatar.src = data.user.picture || "";
             }
+
+            if (username) {
+                username.textContent = "@" + data.user.username;
+            }
+
+            if (displayName) {
+                displayName.textContent = data.user.displayName;
+            }
+
+            if (userId) {
+                userId.textContent = "User ID: " + data.user.id;
+            }
+
+        } else {
+            console.log("Not logged in.");
 
             if (accountSection) {
-
-                accountSection.style.display =
-                    "block";
-
+                accountSection.style.display = "none";
             }
+
+            if (loginButton) loginButton.style.display = "";
+            if (heroLoginButton) heroLoginButton.style.display = "";
+        }
+
+    } catch (error) {
+        console.error("Login check failed:", error);
+    }
+}
 
 
             document.getElementById(
