@@ -1,187 +1,1400 @@
-const BACKEND_URL = "https://remoteevent-backend.onrender.com";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemoteEvent</title>
 
-async function loginWithRoblox() {
-    window.location.href = `${BACKEND_URL}/login`;
-}
+    <meta
+        name="description"
+        content="RemoteEvent - Build. Connect. Play."
+    >
 
-async function checkLogin() {
-    try {
-        const params = new URLSearchParams(window.location.search);
-        const ticket = params.get("ticket");
-
-        // ==========================================
-        // NEW LOGIN
-        // ==========================================
-
-        if (ticket) {
-            console.log("Login ticket found. Exchanging...");
-
-            const response = await fetch(
-                `${BACKEND_URL}/api/exchange?ticket=${encodeURIComponent(ticket)}`,
-                {
-                    method: "GET",
-                    cache: "no-store"
-                }
-            );
-
-            const data = await response.json();
-
-            console.log("Ticket exchange:", data);
-
-            if (data.loggedIn && data.user) {
-                showAccount(data.user);
-
-                // Remove ticket from URL
-                window.history.replaceState(
-                    {},
-                    document.title,
-                    window.location.pathname
-                );
-
-                return;
-            }
-
-            console.error("Ticket exchange failed:", data);
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at 20% 10%,
+                    rgba(93, 92, 255, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(0, 200, 255, 0.10),
+                    transparent 35%
+                ),
+                #07070b;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+            padding: 18px 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(7, 7, 11, 0.72);
+            backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #7c6cff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .login-btn {
+            border: 0;
+            cursor: pointer;
+
+            padding: 10px 18px;
+            border-radius: 10px;
+
+            color: white;
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7066ff,
+                    #9b6cff
+                );
+
+            box-shadow:
+                0 8px 25px rgba(111, 102, 255, 0.25);
+
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 35px rgba(111, 102, 255, 0.35);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 650px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 90px 7% 70px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 13px;
+            margin-bottom: 24px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(80, 220, 130, 0.08);
+
+            border:
+                1px solid rgba(80, 220, 130, 0.2);
+
+            color: #9af0b5;
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #51e88a;
+
+            box-shadow:
+                0 0 12px #51e88a;
+        }
+
+        .hero h1 {
+            font-size: clamp(52px, 8vw, 96px);
+            line-height: 0.95;
+            letter-spacing: -5px;
+            margin-bottom: 28px;
+        }
+
+        .gradient-text {
+            background:
+                linear-gradient(
+                    90deg,
+                    #fff,
+                    #8c7cff,
+                    #58d8ff
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            color: #a4a4b0;
+
+            font-size: 18px;
+            line-height: 1.7;
+
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border: 0;
+            cursor: pointer;
+
+            padding: 14px 22px;
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .primary-btn {
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7066ff,
+                    #9b6cff
+                );
+        }
+
+        .secondary-btn {
+            color: #ddd;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #888894;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(250px, 1fr)
+                );
+
+            gap: 18px;
+        }
+
+        .card {
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(15px);
+
+            transition: 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(125, 110, 255, 0.35);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .card p {
+            color: #92929d;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .card-tag {
+            display: inline-block;
+
+            margin-bottom: 18px;
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            color: #aaa2ff;
+
+            background:
+                rgba(124,108,255,0.1);
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .online {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #6cf19a;
+            font-size: 13px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #55e98b;
+        }
+
+        /* =========================
+           ACCOUNT
+        ========================= */
+
+        #accountSection {
+            display: none;
+        }
+
+        .account-card {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .account-avatar {
+            width: 90px;
+            height: 90px;
+
+            object-fit: cover;
+
+            border-radius: 20px;
+
+            background: #16161e;
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+        }
+
+        .account-info h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .account-username {
+            color: #9a91ff;
+            margin-bottom: 8px;
+        }
+
+        .account-id {
+            color: #777783;
+            font-size: 13px;
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================= */
+
+        .dashboard-card {
+            min-height: 190px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dashboard-icon {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background:
+                rgba(124,108,255,0.12);
+
+            color: #948aff;
+
+            font-weight: 900;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 40px 7%;
+
+            border-top:
+                1px solid rgba(255,255,255,0.06);
+
+            color: #696973;
+            font-size: 13px;
+
+            display: flex;
+            justify-content: space-between;
+
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            nav {
+                padding: 16px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 70px 5%;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+
+            .account-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav>
+
+        <a href="#" class="logo">
+            Remote<span>Event</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="#games">
+                Games
+            </a>
+
+            <a href="#portfolio">
+                Portfolio
+            </a>
+
+            <a href="#status">
+                Status
+            </a>
+
+            <a href="#dashboard">
+                Dashboard
+            </a>
+
+            <a href="#accountSection">
+                Account
+            </a>
+
+        </div>
+
+        <button
+            id="loginButton"
+            class="login-btn"
+            onclick="loginWithRoblox()"
+        >
+            Sign in with Roblox
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="status">
+
+                    <span class="status-dot"></span>
+
+                    All systems operational
+
+                </div>
+
+                <h1>
+
+                    Build.
+                    <br>
+
+                    <span class="gradient-text">
+                        Connect.
+                    </span>
+
+                    <br>
+
+                    Play.
+
+                </h1>
+
+                <p>
+                    RemoteEvent is a Roblox-focused
+                    platform for developers, creators
+                    and players. Build games, showcase
+                    your work and connect your projects.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button
+                        id="heroLoginButton"
+                        class="primary-btn"
+                        onclick="loginWithRoblox()"
+                    >
+                        Sign in with Roblox
+                    </button>
+
+                    <a
+                        href="#games"
+                        class="secondary-btn"
+                    >
+                        Explore Games
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             GAMES
+        ========================= -->
+
+        <section id="games">
+
+            <div class="section-title">
+
+                <h2>
+                    Games
+                </h2>
+
+                <p>
+                    Explore projects powered by RemoteEvent.
+                </p>
+
+            </div>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <span class="card-tag">
+                        ROBLOX
+                    </span>
+
+                    <h3>
+                        Your Game
+                    </h3>
+
+                    <p>
+                        Your Roblox game can be displayed
+                        here with its description, player
+                        count and status.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="card-tag">
+                        DEVELOPMENT
+                    </span>
+
+                    <h3>
+                        Upcoming Project
+                    </h3>
+
+                    <p>
+                        Add your next Roblox project here
+                        when development begins.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="card-tag">
+                        COMMUNITY
+                    </span>
+
+                    <h3>
+                        Community Game
+                    </h3>
+
+                    <p>
+                        Showcase games made by members
+                        of your community.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PORTFOLIO
+        ========================= -->
+
+        <section id="portfolio">
+
+            <div class="section-title">
+
+                <h2>
+                    Developer Portfolio
+                </h2>
+
+                <p>
+                    Showcase your Roblox development skills.
+                </p>
+
+            </div>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <span class="card-tag">
+                        SCRIPTING
+                    </span>
+
+                    <h3>
+                        Roblox Systems
+                    </h3>
+
+                    <p>
+                        Custom systems, gameplay mechanics,
+                        RemoteEvents and server-side
+                        development.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="card-tag">
+                        BUILDING
+                    </span>
+
+                    <h3>
+                        Game Design
+                    </h3>
+
+                    <p>
+                        Build immersive Roblox worlds,
+                        environments and gameplay spaces.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="card-tag">
+                        UI / UX
+                    </span>
+
+                    <h3>
+                        Interface Design
+                    </h3>
+
+                    <p>
+                        Create clean and modern interfaces
+                        for Roblox experiences.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STATUS
+        ========================= -->
+
+        <section id="status">
+
+            <div class="section-title">
+
+                <h2>
+                    System Status
+                </h2>
+
+                <p>
+                    Current RemoteEvent services.
+                </p>
+
+            </div>
+
+            <div class="grid">
+
+                <div class="card status-card">
+
+                    <div>
+
+                        <h3>
+                            Website
+                        </h3>
+
+                        <p>
+                            RemoteEvent website
+                        </p>
+
+                    </div>
+
+                    <div class="online">
+
+                        <span class="online-dot"></span>
+
+                        Operational
+
+                    </div>
+
+                </div>
+
+
+                <div class="card status-card">
+
+                    <div>
+
+                        <h3>
+                            Backend
+                        </h3>
+
+                        <p>
+                            Authentication API
+                        </p>
+
+                    </div>
+
+                    <div class="online">
+
+                        <span class="online-dot"></span>
+
+                        Operational
+
+                    </div>
+
+                </div>
+
+
+                <div class="card status-card">
+
+                    <div>
+
+                        <h3>
+                            Roblox Login
+                        </h3>
+
+                        <p>
+                            Roblox OAuth
+                        </p>
+
+                    </div>
+
+                    <div class="online">
+
+                        <span class="online-dot"></span>
+
+                        Operational
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================= -->
+
+        <section id="dashboard">
+
+            <div class="section-title">
+
+                <h2>
+                    Dashboard
+                </h2>
+
+                <p>
+                    Manage your RemoteEvent projects.
+                </p>
+
+            </div>
+
+            <div class="grid">
+
+                <div class="card dashboard-card">
+
+                    <div class="dashboard-icon">
+                        +
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Create Project
+                        </h3>
+
+                        <p>
+                            Start a new Roblox project
+                            and add it to your portfolio.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card dashboard-card">
+
+                    <div class="dashboard-icon">
+                        #
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Manage Games
+                        </h3>
+
+                        <p>
+                            Manage your listed Roblox
+                            experiences and game information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card dashboard-card">
+
+                    <div class="dashboard-icon">
+                        !
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Reports
+                        </h3>
+
+                        <p>
+                            View system and project
+                            information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACCOUNT
+        ========================= -->
+
+        <section id="accountSection">
+
+            <div class="section-title">
+
+                <h2>
+                    Your Account
+                </h2>
+
+                <p>
+                    Your Roblox account connected
+                    to RemoteEvent.
+                </p>
+
+            </div>
+
+            <div class="card account-card">
+
+                <img
+                    id="accountAvatar"
+                    class="account-avatar"
+                    src=""
+                    alt="Roblox Avatar"
+                >
+
+                <div class="account-info">
+
+                    <h3 id="accountDisplayName">
+                        Loading...
+                    </h3>
+
+                    <div
+                        id="accountUsername"
+                        class="account-username"
+                    >
+                        @loading
+                    </div>
+
+                    <div
+                        id="accountUserId"
+                        class="account-id"
+                    >
+                        User ID: loading
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <div>
+            © 2026 RemoteEvent
+        </div>
+
+        <div>
+            Roblox Developer Platform
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+         DO NOT REMOVE THE SCRIPT TAGS
+    ========================= -->
+
+    <script>
+
+        const BACKEND_URL =
+            "https://remoteevent-backend.onrender.com";
+
+
         // ==========================================
-        // NORMAL SESSION CHECK
+        // ROBLOX LOGIN
         // ==========================================
 
-        const response = await fetch(
-            `${BACKEND_URL}/api/me`,
-            {
-                method: "GET",
-                credentials: "include",
-                cache: "no-store"
+        function loginWithRoblox() {
+
+            window.location.href =
+                `${BACKEND_URL}/login`;
+
+        }
+
+
+        // ==========================================
+        // CHECK LOGIN
+        // ==========================================
+
+        async function checkLogin() {
+
+            try {
+
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+                const ticket =
+                    params.get("ticket");
+
+
+                // ==================================
+                // NEW LOGIN TICKET
+                // ==================================
+
+                if (ticket) {
+
+                    console.log(
+                        "Login ticket found. Exchanging..."
+                    );
+
+
+                    const response =
+                        await fetch(
+                            `${BACKEND_URL}/api/exchange?ticket=${encodeURIComponent(ticket)}`,
+                            {
+                                method: "GET",
+                                cache: "no-store"
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "Ticket exchange:",
+                        data
+                    );
+
+
+                    if (
+                        data.loggedIn &&
+                        data.user
+                    ) {
+
+                        showAccount(
+                            data.user
+                        );
+
+
+                        // Remove ticket from URL
+                        window.history.replaceState(
+                            {},
+                            document.title,
+                            window.location.pathname
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    console.error(
+                        "Ticket exchange failed:",
+                        data
+                    );
+
+                }
+
+
+                // ==================================
+                // NORMAL SESSION CHECK
+                // ==================================
+
+                const response =
+                    await fetch(
+                        `${BACKEND_URL}/api/me`,
+                        {
+                            method: "GET",
+                            credentials: "include",
+                            cache: "no-store"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "RemoteEvent login:",
+                    data
+                );
+
+
+                if (
+                    data.loggedIn &&
+                    data.user
+                ) {
+
+                    showAccount(
+                        data.user
+                    );
+
+                } else {
+
+                    showLoggedOut();
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Login check failed:",
+                    error
+                );
+
+                showLoggedOut();
+
+            }
+
+        }
+
+
+        // ==========================================
+        // SHOW ACCOUNT
+        // ==========================================
+
+        function showAccount(user) {
+
+            const loginButton =
+                document.getElementById(
+                    "loginButton"
+                );
+
+
+            const heroLoginButton =
+                document.getElementById(
+                    "heroLoginButton"
+                );
+
+
+            const accountSection =
+                document.getElementById(
+                    "accountSection"
+                );
+
+
+            const avatar =
+                document.getElementById(
+                    "accountAvatar"
+                );
+
+
+            const username =
+                document.getElementById(
+                    "accountUsername"
+                );
+
+
+            const displayName =
+                document.getElementById(
+                    "accountDisplayName"
+                );
+
+
+            const userId =
+                document.getElementById(
+                    "accountUserId"
+                );
+
+
+            if (loginButton) {
+
+                loginButton.style.display =
+                    "none";
+
+            }
+
+
+            if (heroLoginButton) {
+
+                heroLoginButton.style.display =
+                    "none";
+
+            }
+
+
+            if (accountSection) {
+
+                accountSection.style.display =
+                    "block";
+
+            }
+
+
+            if (avatar) {
+
+                avatar.src =
+                    user.picture || "";
+
+            }
+
+
+            if (username) {
+
+                username.textContent =
+                    "@" +
+                    (user.username || "");
+
+            }
+
+
+            if (displayName) {
+
+                displayName.textContent =
+                    user.displayName || "";
+
+            }
+
+
+            if (userId) {
+
+                userId.textContent =
+                    "User ID: " +
+                    (user.id || "");
+
+            }
+
+        }
+
+
+        // ==========================================
+        // SHOW LOGGED OUT
+        // ==========================================
+
+        function showLoggedOut() {
+
+            const loginButton =
+                document.getElementById(
+                    "loginButton"
+                );
+
+
+            const heroLoginButton =
+                document.getElementById(
+                    "heroLoginButton"
+                );
+
+
+            const accountSection =
+                document.getElementById(
+                    "accountSection"
+                );
+
+
+            if (accountSection) {
+
+                accountSection.style.display =
+                    "none";
+
+            }
+
+
+            if (loginButton) {
+
+                loginButton.style.display =
+                    "";
+
+            }
+
+
+            if (heroLoginButton) {
+
+                heroLoginButton.style.display =
+                    "";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOGOUT
+        // ==========================================
+
+        async function logout() {
+
+            try {
+
+                await fetch(
+                    `${BACKEND_URL}/logout`,
+                    {
+                        method: "GET",
+                        credentials: "include"
+                    }
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+
+            window.location.reload();
+
+        }
+
+
+        // ==========================================
+        // START
+        // ==========================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                checkLogin();
+
             }
         );
 
-        const data = await response.json();
+    </script>
 
-        console.log("RemoteEvent login:", data);
-
-        if (data.loggedIn && data.user) {
-            showAccount(data.user);
-        } else {
-            showLoggedOut();
-        }
-
-    } catch (error) {
-        console.error("Login check failed:", error);
-        showLoggedOut();
-    }
-}
-
-// ==========================================
-// SHOW ACCOUNT
-// ==========================================
-
-function showAccount(user) {
-    const loginButton =
-        document.getElementById("loginButton");
-
-    const heroLoginButton =
-        document.getElementById("heroLoginButton");
-
-    const accountSection =
-        document.getElementById("accountSection");
-
-    const avatar =
-        document.getElementById("accountAvatar");
-
-    const username =
-        document.getElementById("accountUsername");
-
-    const displayName =
-        document.getElementById("accountDisplayName");
-
-    const userId =
-        document.getElementById("accountUserId");
-
-    if (loginButton) {
-        loginButton.style.display = "none";
-    }
-
-    if (heroLoginButton) {
-        heroLoginButton.style.display = "none";
-    }
-
-    if (accountSection) {
-        accountSection.style.display = "block";
-    }
-
-    if (avatar) {
-        avatar.src = user.picture || "";
-    }
-
-    if (username) {
-        username.textContent =
-            "@" + user.username;
-    }
-
-    if (displayName) {
-        displayName.textContent =
-            user.displayName;
-    }
-
-    if (userId) {
-        userId.textContent =
-            "User ID: " + user.id;
-    }
-}
-
-// ==========================================
-// SHOW LOGGED OUT
-// ==========================================
-
-function showLoggedOut() {
-    const loginButton =
-        document.getElementById("loginButton");
-
-    const heroLoginButton =
-        document.getElementById("heroLoginButton");
-
-    const accountSection =
-        document.getElementById("accountSection");
-
-    if (accountSection) {
-        accountSection.style.display = "none";
-    }
-
-    if (loginButton) {
-        loginButton.style.display = "";
-    }
-
-    if (heroLoginButton) {
-        heroLoginButton.style.display = "";
-    }
-}
-
-// ==========================================
-// LOGOUT
-// ==========================================
-
-async function logout() {
-    try {
-        await fetch(`${BACKEND_URL}/logout`, {
-            method: "GET",
-            credentials: "include"
-        });
-    } catch (error) {
-        console.error("Logout error:", error);
-    }
-
-    window.location.reload();
-}
-
-// ==========================================
-// START
-// ==========================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-        checkLogin();
-    }
-);
+</body>
+</html>
