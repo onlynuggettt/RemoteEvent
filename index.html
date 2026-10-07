@@ -1805,6 +1805,11 @@
 
                 if (data.user) {
 
+                    localStorage.setItem(
+                        USER_KEY,
+                        JSON.stringify(data.user)
+                    );
+
                     showLoggedIn(
                         data.user
                     );
@@ -1844,7 +1849,7 @@
 
 
         /* ---------------------------------------------
-           EXISTING TOKEN
+           RESTORE SAVED LOGIN
         --------------------------------------------- */
 
         if (!currentUser) {
@@ -1855,13 +1860,53 @@
                 );
 
 
+            const savedUser =
+                localStorage.getItem(
+                    USER_KEY
+                );
+
+
             if (!token) {
 
                 showLoggedOut();
 
-                loadPortfolio();
+                await loadPortfolio();
 
                 return;
+
+            }
+
+
+            /*
+               Show the cached user immediately so a temporary
+               backend/network problem does not visually log
+               the user out after refreshing the page.
+            */
+
+            if (savedUser) {
+
+                try {
+
+                    const cachedUser =
+                        JSON.parse(savedUser);
+
+
+                    if (cachedUser) {
+
+                        showLoggedIn(
+                            cachedUser
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.warn(
+                        "Could not restore cached user:",
+                        error
+                    );
+
+                }
 
             }
 
@@ -1874,8 +1919,22 @@
                     );
 
 
-                const data =
-                    await response.json();
+                let data = {};
+
+
+                try {
+
+                    data =
+                        await response.json();
+
+                } catch (error) {
+
+                    console.warn(
+                        "Could not read session response:",
+                        error
+                    );
+
+                }
 
 
                 if (
@@ -1884,14 +1943,33 @@
                     data.user
                 ) {
 
+                    localStorage.setItem(
+                        USER_KEY,
+                        JSON.stringify(data.user)
+                    );
+
                     showLoggedIn(
                         data.user
                     );
 
-                } else {
+                } else if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    /*
+                       Only remove the login when the backend
+                       explicitly says the token is invalid.
+                       500/network errors should NOT log the
+                       user out.
+                    */
 
                     localStorage.removeItem(
                         TOKEN_KEY
+                    );
+
+                    localStorage.removeItem(
+                        USER_KEY
                     );
 
                     showLoggedOut();
@@ -1902,17 +1980,15 @@
             } catch (error) {
 
                 console.error(
-                    "Session error:",
+                    "Session verification error:",
                     error
                 );
 
-
-                localStorage.removeItem(
-                    TOKEN_KEY
-                );
-
-
-                showLoggedOut();
+                /*
+                   Keep the saved login on network/server errors.
+                   The user can stay logged in and the token can
+                   be verified again on the next request/refresh.
+                */
 
             }
 
@@ -1933,7 +2009,6 @@
         }
 
     }
-
 
     /* =====================================================
        SHOW LOGGED IN
@@ -2065,6 +2140,10 @@
 
         localStorage.removeItem(
             TOKEN_KEY
+        );
+
+        localStorage.removeItem(
+            USER_KEY
         );
 
 
